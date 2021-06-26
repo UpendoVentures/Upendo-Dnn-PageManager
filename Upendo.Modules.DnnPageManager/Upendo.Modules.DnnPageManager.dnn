@@ -1,0 +1,78 @@
+﻿<dotnetnuke type="Package" version="5.0">
+	<packages>
+		<package name="Upendo.Modules.DnnPageManager" type="Module" version="1.0.0">
+			<friendlyName>Upendo DNN PageManager</friendlyName>
+			<description >
+				<![CDATA[<p>This is a Page Manager module, by Upendo Ventures.</p>]]>
+			</description>
+			<iconFile>~/DesktopModules/Upendo.Modules.DnnPageManager/Images/PageManger.png</iconFile>
+			<owner>
+				<name>Upendo Modules</name>
+				<organization>Upendo Ventures, LLC</organization>
+				<url><![CDATA[<a href="https://upendodnn.com" target="_blank">https://upendodnn.com</a>]]></url>
+				<email><![CDATA[<a href="mailto:support@upendoventures.com" target="_blank">support@upendoventures.com</a>]]></email>
+			</owner>
+			<license src="License.txt" />
+			<releaseNotes src="ReleaseNotes.txt" />
+			<azureCompatible>true</azureCompatible>
+			<components>
+				<component type="Module">
+					<desktopModule>
+						<moduleName>Upendo Page Manager</moduleName>
+						<foldername>Upendo.Modules.DnnPageManager</foldername>
+						<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController,Upendo.Modules.DnnPageManager</businessControllerClass>
+						<supportedFeatures>
+							<supportedFeature type="Portable" />
+						</supportedFeatures>
+						<shareable>Supported</shareable>
+						<moduleDefinitions>
+							<moduleDefinition>
+								<friendlyName>Upendo DNN Page Manager</friendlyName>
+								<definitionName>Upendo.Modules.DnnPageManager</definitionName>
+								<defaultCacheTime>0</defaultCacheTime>
+								<moduleControls>
+									<moduleControl>
+										<controlKey />
+										<controlSrc>DesktopModules/Upendo.Modules.DnnPageManager/index.html</controlSrc>
+										<supportsPartialRendering>True</supportsPartialRendering>
+										<controlTitle />
+										<controlType>Anonymous</controlType>
+										<iconFile />
+										<helpUrl />
+										<supportsPopUps>True</supportsPopUps>
+									</moduleControl>
+								</moduleControls>
+							</moduleDefinition>
+						</moduleDefinitions>
+					</desktopModule>
+					<eventMessage>
+						<processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+						<processorCommand>UpgradeModule</processorCommand>
+						<attributes>
+							<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController,Upendo.Modules.DnnPageManager</businessControllerClass>
+							<desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+							<upgradeVersionsList />
+						</attributes>
+					</eventMessage>
+				</component>
+				<component type="Assembly">
+					<assemblies>
+						<assembly>
+							<name>Upendo.Modules.DnnPageManager.dll</name>
+							<version>01.00.00</version>
+							<path>bin</path>
+						</assembly>
+					</assemblies>
+				</component>
+				<component type="ResourceFile">
+					<resourceFiles>
+						<basePath>DesktopModules\Upendo.Modules.DnnPageManager</basePath>
+						<resourceFile>
+							<name>Resources.zip</name>
+						</resourceFile>
+					</resourceFiles>
+				</component>
+			</components>
+		</package>
+	</packages>
+</dotnetnuke>

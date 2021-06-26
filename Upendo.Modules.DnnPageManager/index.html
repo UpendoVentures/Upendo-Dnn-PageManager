@@ -1,0 +1,33 @@
+﻿[AntiForgeryToken:true]
+
+<!-- Production -->
+<!--
+[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/runtime.js", priority:100, provider: "DnnFormBottomProvider"}]
+[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/polyfills.js", priority:100, provider: "DnnFormBottomProvider"}]
+[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/main.js", priority:100, provider: "DnnFormBottomProvider"}]
+[Css:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/styles.css"}]
+-->
+<!-- End: Production -->
+
+<!-- Development -->
+[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/runtime.js", priority:100, provider: "DnnFormBottomProvider"}]
+[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/polyfills.js", priority:100, provider: "DnnFormBottomProvider"}]
+<!--[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/styles.js", priority:100, provider: "DnnFormBottomProvider"}]-->
+<!--[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/vendor.js", priority:100, provider: "DnnFormBottomProvider"}]-->
+[JavaScript:{ path: "~/DesktopModules/Upendo.Modules.DnnPageManager/dist/main.js", priority:100, provider: "DnnFormBottomProvider"}]
+<!-- End: Development -->
+
+<!-- Material Design -->
+[Css:{ path: "https://fonts.googleapis.com/icon?family=Material+Icons"}]
+
+<!--
+[ModuleContext:ModuleId]
+[Tab:TabId]
+-->
+<base href="[ModuleProperties:rawurl]">
+<app-root>
+    <p>Loading....</p>
+</app-root>
+<script>
+    window["Upendo.Modules.DnnPageManager"] = [ModuleProperties:All]
+</script>

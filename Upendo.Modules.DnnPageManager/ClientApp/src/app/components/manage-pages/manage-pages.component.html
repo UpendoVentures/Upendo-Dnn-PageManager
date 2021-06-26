@@ -1,0 +1,179 @@
+<div class="search-bar">
+  <mat-form-field class="example-form-field" appearance="outline">
+    <mat-icon matPrefix>search</mat-icon>
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="searchText"
+      (keydown.enter)="getPages(true)"
+    />
+  </mat-form-field>
+  <a
+    class="clear-search"
+    *ngIf="showClearSearch && searchText.length > 0"
+    mat-stroked-button
+    color="primary"
+    (click)="clearSearch()"
+    disableRipple
+  >
+    X
+  </a>
+</div>
+<div>
+  <table
+    *ngIf="!(isLoading$ | async)"
+    mat-table
+    [dataSource]="dataSource$"
+    matSort
+    (matSortChange)="sortData()"
+    [matSortActive]="sortActive"
+    [matSortDirection]="sortDirection"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-sort-header="name" mat-header-cell *matHeaderCellDef>Name</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+      >
+        <mat-icon (click)="redirectToPage(element)" class="link-icon">link</mat-icon>
+        <span (dblclick)="edit(element.Id, element.Name, 'Name')">{{ element.Name }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-sort-header="title" mat-header-cell *matHeaderCellDef>Title</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="edit(element.Id, element.Title, 'Title')"
+      >
+        <span>{{ element.Title }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="edit(element.Id, element.Description, 'Description')"
+      >
+        <span>{{ element.Description }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="keywords">
+      <th mat-header-cell *matHeaderCellDef>Keywords</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="edit(element.Id, element.Keywords, 'Keywords')"
+      >
+        <span>{{ element.Keywords }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef>Priority</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="edit(element.Id, element.Priority, 'Priority')"
+        align="center"
+      >
+        <span>{{ element.Priority }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="primaryUrl">
+      <th mat-header-cell *matHeaderCellDef>Primary URL</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="edit(element.Id, element.PrimaryUrl, 'PrimaryUrl')"
+      >
+        <span>{{ element.PrimaryUrl }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="permissions">
+      <th mat-header-cell *matHeaderCellDef>Permissions</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (dblclick)="editPermissions(element)"
+        align="center"
+      >
+        <span> View | Edit</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdated">
+      <th mat-header-cell *matHeaderCellDef width="10%">Last Updated</th>
+      <td mat-cell *matCellDef="let element">{{ element.LastUpdated }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" align="center">
+        <mat-icon (click)="openPageModules(element)">settings</mat-icon>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="indexing">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          *ngIf="element.IsIndexed"
+          (dblclick)="updateIndexing(element, false)"
+          align="center"
+          >zoom_in</mat-icon
+        >
+        <mat-icon
+          *ngIf="!element.IsIndexed"
+          (dblclick)="updateIndexing(element, true)"
+          align="center"
+          >zoom_out</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="visibility">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          *ngIf="element.IsVisible"
+          (dblclick)="updateVisibility(element, false)"
+          >visibility</mat-icon
+        >
+        <mat-icon
+          *ngIf="!element.IsVisible"
+          (dblclick)="updateVisibility(element, true)"
+          >visibility_off</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="accessibility">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.HasBeenPublished"
+          >radio_button_unchecked</mat-icon
+        >
+        <mat-icon *ngIf="!element.HasBeenPublished">check_circle</mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [length]="total$ | async"
+    [pageSizeOptions]="[10, 25, 100]"
+  ></mat-paginator>
+</div>
+
+<span class="error-message" *ngIf="errorMessage.length > 0">
+  {{ errorMessage }}
+</span>
