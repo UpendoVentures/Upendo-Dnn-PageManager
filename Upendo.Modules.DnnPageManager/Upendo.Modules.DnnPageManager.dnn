@@ -2,15 +2,15 @@
 	<packages>
 		<package name="Upendo.Modules.DnnPageManager" type="Module" version="1.0.0">
 			<friendlyName>Upendo DNN PageManager</friendlyName>
-			<description >
-				This is a Page Manager module, by Upendo Ventures.
+			<description>
+				This is a page management module meant to help make managing pages in DNN easier for all end-users, built by Upendo Ventures.
 			</description>
 			<iconFile>~/DesktopModules/Upendo.Modules.DnnPageManager/Images/PageManager.png</iconFile>
 			<owner>
 				<name>Upendo Modules</name>
 				<organization>Upendo Ventures, LLC</organization>
 				<url>https://upendoventures.com</url>
-				<email>support@upendoventures.com</email>
+				<email>solutions@upendoventures.com</email>
 			</owner>
 			<license src="License.txt" />
 			<releaseNotes src="ReleaseNotes.txt" />
@@ -20,7 +20,7 @@
 					<desktopModule>
 						<moduleName>Upendo Page Manager</moduleName>
 						<foldername>Upendo.Modules.DnnPageManager</foldername>
-						<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController,Upendo.Modules.DnnPageManager</businessControllerClass>
+						<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
 						<supportedFeatures>
 							<supportedFeature type="Portable" />
 						</supportedFeatures>
@@ -49,9 +49,9 @@
 						<processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
 						<processorCommand>UpgradeModule</processorCommand>
 						<attributes>
-							<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController,Upendo.Modules.DnnPageManager</businessControllerClass>
+							<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
 							<desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-							<upgradeVersionsList />
+              <upgradeVersionsList>01.00.00</upgradeVersionsList>
 						</attributes>
 					</eventMessage>
 				</component>
