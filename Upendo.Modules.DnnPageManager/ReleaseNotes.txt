@@ -1,0 +1,12 @@
+<style>
+	div.uv-install-wrapper h3, div.uv-install-wrapper h4, div.uv-install-wrapper p, div.uv-install-wrapper hr, div.uv-install-wrapper ul { margin-bottom: 0.5em; }
+	div.uv-install-wrapper ul { padding-left: 2em; }
+</style>
+<div class="uv-install-wrapper">
+	<h2>Page Manager Module for DNN</h2>
+
+	<p>Version 01.00.00</p>
+	<ul>
+		<li>Initial release. Allows authorized end-users to manage pages more quickly.</li>
+	</ul>
+</div>
