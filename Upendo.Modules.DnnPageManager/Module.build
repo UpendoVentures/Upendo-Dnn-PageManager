@@ -28,11 +28,11 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" />
-    <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.pdb" />
+    <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" Exclude="$(MSBuildProjectDirectory)\bin\$(Configuration)\DotNetNuke*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Telerik*;$(MSBuildProjectDirectory)\bin\$(Configuration)\System.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Microsoft.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Newtonsoft.Json.*" />
+    <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.pdb" Exclude="$(MSBuildProjectDirectory)\bin\$(Configuration)\DotNetNuke*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Telerik*;$(MSBuildProjectDirectory)\bin\$(Configuration)\System.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Microsoft.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Newtonsoft.Json.*" />
   </ItemGroup>
   <ItemGroup>
-    <BinInstallInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" />
+    <BinInstallInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" Exclude="$(MSBuildProjectDirectory)\bin\$(Configuration)\DotNetNuke*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Telerik*;$(MSBuildProjectDirectory)\bin\$(Configuration)\System.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Microsoft.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Newtonsoft.Json.*" />
   </ItemGroup>
   <Target Name="CopyBin">
     <Copy SourceFiles="@(BinSourceInclude)" DestinationFolder="$(WebsitePath)\bin" />
