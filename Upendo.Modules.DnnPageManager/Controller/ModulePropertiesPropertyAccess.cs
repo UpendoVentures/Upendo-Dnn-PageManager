@@ -1,4 +1,19 @@
-﻿using DotNetNuke.Services.Tokens;
+﻿/*
+Copyright Upendo Ventures, LLC 
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.
+*/
+
+using DotNetNuke.Services.Tokens;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
@@ -6,11 +21,8 @@ using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Modules;
 using Newtonsoft.Json;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Globalization;
 using System.Dynamic;
 using System.Web;
@@ -37,7 +49,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             int tabId = _moduleContext.TabId;
             ModuleInfo module = new ModuleController().GetModule(moduleId, tabId);
 
-            string moduleDirectory = "/" + _moduleContext.Configuration.ModuleControl.ControlSrc; 
+            string moduleDirectory = "/" + _moduleContext.Configuration.ModuleControl.ControlSrc;
             moduleDirectory = moduleDirectory.Substring(0, moduleDirectory.LastIndexOf('/') + 1);
 
             switch (propertyName.ToLower())
@@ -59,7 +71,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     properties.CurrentLanguage = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
                     properties.routingWebAPI = Constants.APIPath;
                     properties.TabId = _moduleContext.TabId;
-                     
+
                     return JsonConvert.SerializeObject(properties);
 
                 case "modulepath":
@@ -88,8 +100,8 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             var currentLanguage = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
             System.IO.FileInfo fi = new System.IO.FileInfo(HttpContext.Current.Server.MapPath("~/" + _moduleContext.Configuration.ModuleControl.ControlSrc + "." + currentLanguage + ".resx"));
-            string physResourceFile = string.Format("{0}/{1}/{2}", fi.DirectoryName,Constants.Resources, fi.Name);
-            string relResourceFile =string.Format("/{0}/{1}/{2}/{3}", Constants.DesktopModules, module.DesktopModule.FolderName , Constants.Resources, fi.Name);
+            string physResourceFile = string.Format("{0}/{1}/{2}", fi.DirectoryName, Constants.Resources, fi.Name);
+            string relResourceFile = string.Format("/{0}/{1}/{2}/{3}", Constants.DesktopModules, module.DesktopModule.FolderName, Constants.Resources, fi.Name);
             if (File.Exists(physResourceFile))
             {
                 using (var rsxr = new ResXResourceReader(physResourceFile))
