@@ -121,6 +121,7 @@
     <None Include="app.config" />
     <None Include="Module.build" />
     <None Include="packages.config" />
+    <None Include="Upendo.Modules.DnnPageManager_Symbols.dnn" />
     <None Include="Upendo.Modules.DnnPageManager.dnn" />
   </ItemGroup>
   <ItemGroup>
