@@ -1,0 +1,63 @@
+table
+   width: 100%
+
+th.mat-header-cell
+   font-size: 12px
+   font-weight: 700
+   color: #46292B
+   padding: 8px
+   text-transform: uppercase
+
+td
+   &.mat-cell
+      font-size: 12px
+      padding: 8px
+      cursor: pointer
+      color: #000000
+
+   &:first-child,
+   &:nth-child(2)
+      white-space: nowrap
+
+tr:not(.mat-header-row):hover
+   background-color: #f3f3f3
+
+mat-icon
+   font-size: 17px
+   width: 17px
+   height: 17px
+   vertical-align: middle
+   cursor: pointer
+
+.link-icon
+   margin-right: 7px
+
+.search-bar
+   text-align: right
+   margin-bottom: 10px
+   mat-form-field
+      width: 400px
+   .mat-icon
+      color: #46292B
+      margin: 0 7px 4px 0
+      font-size: 17px
+
+.clear-search
+   cursor: pointer
+
+::ng-deep
+   .mat-paginator-outer-container
+      .mat-paginator-container
+         justify-content: space-between
+      .mat-paginator-range-label
+         margin: 0
+
+   .mat-form-field-appearance-outline
+      .mat-form-field-infix
+         font-size: 12px
+         font-weight: 400
+         color: #46292B
+
+.error-message
+  color: red
+  text-weight: 600
