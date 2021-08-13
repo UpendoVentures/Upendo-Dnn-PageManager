@@ -244,7 +244,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(Constants.ERROR_PAGENAME_REQUIRED) { { Constants.RESPONSE_SUCCESS, false } });
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(Constants.ERROR_PAGE_NAME_REQUIRED) { { Constants.RESPONSE_SUCCESS, false } });
                 }
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Name, name);
