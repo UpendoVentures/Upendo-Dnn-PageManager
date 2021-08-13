@@ -20,6 +20,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DotNetNuke.Common.Utilities;
+using DotNetNuke.Instrumentation;
 using Upendo.Modules.DnnPageManager.Common;
 using Upendo.Modules.DnnPageManager.Components;
 using DotNetNuke.Security;
@@ -29,6 +30,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
 {
     public class PagesController : DnnApiController
     {
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
 
         private readonly IPagesControllerImpl pageController;
         private readonly ISecurityService securityService;
@@ -107,6 +109,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -137,6 +140,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -168,6 +172,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -218,6 +223,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -246,6 +252,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -269,6 +276,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -292,6 +300,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -316,6 +325,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -346,6 +356,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -369,6 +380,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -392,6 +404,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -415,6 +428,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
             }
@@ -423,6 +437,18 @@ namespace Upendo.Modules.DnnPageManager.Controller
         private HttpResponseMessage GetForbiddenResponse()
         {
             return this.Request.CreateResponse(HttpStatusCode.Forbidden, new { Message = "The user is not allowed to access this." });
+        }
+
+        private void LogError(Exception ex)
+        {
+            if (ex != null)
+            {
+                Logger.Error(ex.Message, ex);
+                if (ex.InnerException != null)
+                {
+                    Logger.Error(ex.InnerException.Message, ex.InnerException);
+                }
+            }
         }
     }
 }
