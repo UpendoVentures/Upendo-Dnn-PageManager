@@ -13,9 +13,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using DotNetNuke.ComponentModel;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
+using DotNetNuke.Instrumentation;
+using Upendo.Modules.DnnPageManager.Common;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {
@@ -27,24 +30,54 @@ namespace Upendo.Modules.DnnPageManager.Components
 
     public class SecurityService : ISecurityService
     {
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(SecurityService));
+
         public static ISecurityService Instance
         {
             get
             {
-                var controller = ComponentFactory.GetComponent<ISecurityService>("SecurityService");
-                if (controller == null)
+                try
                 {
-                    ComponentFactory.RegisterComponent<ISecurityService, SecurityService>("SecurityService");
-                }
+                    var controller = ComponentFactory.GetComponent<ISecurityService>(Constants.SECURITY_SERVICE);
+                    if (controller == null)
+                    {
+                        ComponentFactory.RegisterComponent<ISecurityService, SecurityService>(Constants.SECURITY_SERVICE);
+                    }
 
-                return ComponentFactory.GetComponent<ISecurityService>("SecurityService");
+                    return ComponentFactory.GetComponent<ISecurityService>(Constants.SECURITY_SERVICE);
+                }
+                catch (Exception e)
+                {
+                    LogError(e);
+                    throw;
+                }
             }
         }
 
         public virtual bool IsPagesAdminUser()
         {
-            var user = UserController.Instance.GetCurrentUserInfo();
-            return user.IsSuperUser || user.IsInRole(PortalSettings.Current?.AdministratorRoleName);
+            try
+            {
+                var user = UserController.Instance.GetCurrentUserInfo();
+                return user.IsSuperUser || user.IsInRole(PortalSettings.Current?.AdministratorRoleName);
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
+            }
+        }
+
+        private static void LogError(Exception ex)
+        {
+            if (ex != null)
+            {
+                Logger.Error(ex.Message, ex);
+                if (ex.InnerException != null)
+                {
+                    Logger.Error(ex.InnerException.Message, ex.InnerException);
+                }
+            }
         }
     }
 }
