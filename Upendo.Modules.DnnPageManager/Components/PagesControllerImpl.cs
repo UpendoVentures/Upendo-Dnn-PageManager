@@ -34,25 +34,13 @@ using Constants = Upendo.Modules.DnnPageManager.Common.Constants;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {
-    public interface IPagesControllerImpl
-    {
-        IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey, int pageIndex, int pageSize, bool? deleted);
-        IEnumerable<Module> GetPageModules(int portalId, int tabId);
-        Outcome UpdatePageProperty(int portalId, int tabId, TabFields field, string fieldValue);
-        IEnumerable<Url> GetPageUrls(int portalId, int tabId);
-        IEnumerable<PermissionInfoBase> GetPagePermissions(int portalId, int tabId);
-    }
-
-    public class PagesControllerImpl : IPagesControllerImpl
+    public class PagesControllerImpl 
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesControllerImpl));
 
-        private readonly ITabController _tabController;
-        private readonly IModuleController _moduleController;
-        private readonly IPortalController _portalController;
         private static IMapper Mapper;
 
-        public PagesControllerImpl() : this(TabController.Instance, ModuleController.Instance, PortalController.Instance)
+        public PagesControllerImpl() 
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -60,35 +48,6 @@ namespace Upendo.Modules.DnnPageManager.Components
                 cfg.CreateMap<TabInfo, Page>();
             });
             Mapper = config.CreateMapper();
-        }
-
-        public PagesControllerImpl(ITabController tabController, IModuleController moduleController, IPortalController portalController)
-        {
-            this._tabController = tabController;
-            this._moduleController = moduleController;
-            this._portalController = portalController;
-        }
-
-        public static IPagesControllerImpl Instance
-        {
-            get
-            {
-                try
-                {
-                    var controller = ComponentFactory.GetComponent<IPagesControllerImpl>(Constants.PAGESCONTROLLERIMPL);
-                    if (controller == null)
-                    {
-                        ComponentFactory.RegisterComponent<IPagesControllerImpl, PagesControllerImpl>(Constants.PAGESCONTROLLERIMPL);
-                    }
-
-                    return ComponentFactory.GetComponent<IPagesControllerImpl>(Constants.PAGESCONTROLLERIMPL);
-                }
-                catch (Exception e)
-                {
-                    LogError(e);
-                    throw;
-                }
-            }
         }
 
         public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10, bool? deleted = false)
@@ -148,7 +107,7 @@ namespace Upendo.Modules.DnnPageManager.Components
         {
             try
             {
-                var tabModules = this._moduleController.GetTabModules(tabId)
+                var tabModules = ModuleController.Instance.GetTabModules(tabId)
                                         .Values
                                         .Where(m => !m.IsDeleted)
                                         .Select(m => Mapper.Map<Module>(m));

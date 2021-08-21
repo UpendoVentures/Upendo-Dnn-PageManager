@@ -22,39 +22,11 @@ using Upendo.Modules.DnnPageManager.Common;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {
-
-    public interface ISecurityService
-    {
-        bool IsPagesAdminUser();
-    }
-
-    public class SecurityService : ISecurityService
+    public class SecurityService 
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(SecurityService));
 
-        public static ISecurityService Instance
-        {
-            get
-            {
-                try
-                {
-                    var controller = ComponentFactory.GetComponent<ISecurityService>(Constants.SECURITY_SERVICE);
-                    if (controller == null)
-                    {
-                        ComponentFactory.RegisterComponent<ISecurityService, SecurityService>(Constants.SECURITY_SERVICE);
-                    }
-
-                    return ComponentFactory.GetComponent<ISecurityService>(Constants.SECURITY_SERVICE);
-                }
-                catch (Exception e)
-                {
-                    LogError(e);
-                    throw;
-                }
-            }
-        }
-
-        public virtual bool IsPagesAdminUser()
+        public static bool IsPagesAdminUser()
         {
             try
             {

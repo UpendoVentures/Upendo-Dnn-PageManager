@@ -32,17 +32,8 @@ namespace Upendo.Modules.DnnPageManager.Controller
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
 
-        private readonly IPagesControllerImpl pageController;
-        private readonly ISecurityService securityService;
-
-        public PagesController() : this(PagesControllerImpl.Instance, SecurityService.Instance)
+        public PagesController() 
         {
-        }
-
-        public PagesController(IPagesControllerImpl pageController, ISecurityService securityService)
-        {
-            this.pageController = pageController;
-            this.securityService = securityService;
         }
 
         [HttpGet]
@@ -55,12 +46,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
 
             try
             {
-
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
 
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pages = pageController.GetPagesList(portalId: portalId,
                                                          total: out total,
@@ -124,10 +115,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pageModules = pageController.GetPageModules(portalId, tabId);
                 var result = pageModules.Select(m => new
@@ -154,10 +147,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pageUrls = pageController.GetPageUrls(portalId, tabId);
 
@@ -187,10 +181,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pagePermissions = pageController.GetPagePermissions(portalId, tabId);
 
@@ -237,10 +233,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 if (string.IsNullOrEmpty(name))
                 {
@@ -266,11 +263,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
 
+                PagesControllerImpl pageController = new PagesControllerImpl();
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Title, title);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
@@ -290,10 +288,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Description, description);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
@@ -315,10 +314,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Keywords, keywords);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
@@ -340,10 +340,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 float pagePriority;
                 if (float.TryParse(priority, out pagePriority) == false)
@@ -370,10 +372,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.PrimaryURL, url);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
@@ -394,10 +398,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Visible, visible.ToString());
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
@@ -418,10 +424,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Indexed, indexed.ToString());
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
