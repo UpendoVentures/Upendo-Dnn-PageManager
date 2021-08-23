@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using DotNetNuke.Services.Tokens;
 using DotNetNuke.UI.Modules;
 using System.Web.UI;
+using Upendo.Modules.DnnPageManager.Common;
 
 namespace Upendo.Modules.DnnPageManager.Controller
 {
@@ -26,7 +27,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
         public IDictionary<string, IPropertyAccess> GetTokens(Page page, ModuleInstanceContext moduleContext)
         {
             var tokens = new Dictionary<string, IPropertyAccess>();
-            tokens["moduleproperties"] = new ModulePropertiesPropertyAccess(moduleContext);
+            tokens[Constants.ModuleProperties] = new ModulePropertiesPropertyAccess(moduleContext);
             return tokens;
         }
     }

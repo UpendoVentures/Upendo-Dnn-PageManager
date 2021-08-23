@@ -14,11 +14,9 @@ DEALINGS IN THE SOFTWARE.
 */
 
 using System;
-using DotNetNuke.ComponentModel;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Instrumentation;
-using Upendo.Modules.DnnPageManager.Common;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {

@@ -13,8 +13,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 DEALINGS IN THE SOFTWARE.
 */
 
+using System;
+
 namespace Upendo.Modules.DnnPageManager.Model
 {
+    [Serializable]
     public class Outcome
     {
         public bool Success { get; set; }
