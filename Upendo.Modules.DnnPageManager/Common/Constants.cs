@@ -20,6 +20,9 @@ namespace Upendo.Modules.DnnPageManager.Common
         public const string ModuleName = "Upendo.Modules.DnnPageManager";
         public const string ModuleFolderName = "Upendo.Modules.DnnPageManager";
 
+        public const string ModuleProperties = "moduleproperties";
+        public const string ALLOW_INDEX = "AllowIndex";
+
         public const string SECURITY_SERVICE = "SecurityService";
         public const string PAGESCONTROLLERIMPL = "PagesControllerImpl";
 
@@ -36,6 +39,8 @@ namespace Upendo.Modules.DnnPageManager.Common
         public const string DESC = "desc";
 
         public const string SLASH = "/";
+        public const string DOT = ".";
+        public const string UNDERSCORE = "_";
 
         public const string SYSTEM = "System";
         public const string ACCOUNT = "Account";
@@ -59,6 +64,24 @@ namespace Upendo.Modules.DnnPageManager.Common
         public const string ERROR_PAGE_URL_VALUE = "Page Url value ";
 
         public static string ERROR_FORMAT_UPDATE_VALUE = "Error updating value for {0}. Error: {1}";
+
+        public static class Properties
+        {
+            public const string PROPERTY_ALL = "all";
+            public const string PROPERTY_MODULEPATH = "modulepath";
+            public const string PROPERTY_APPROOT_BEGIN = "approotangularbegin";
+            public const string PROPERTY_APPROOT_END = "approotangularend";
+            public const string PROPERTY_MODULEID = "ModuleId";
+            public const string PROPERTY_RAWURL = "rawurl";
+            public const string PROPERTY_TEST = "test";
+
+            public static string APPROOT_OPEN = "<app-root-{0}>";
+            public static string APPROOT_CLOSE = "</app-root-{0}>";
+
+            public static string LOCALIZATION_PATH_FORMAT = "~/{0}.{1}.resx";
+            public static string PHYSICAL_FILE_FORMAT = "{0}/{1}/{2}";
+            public static string RELATIVE_FILE_FORMAT = "/{0}/{1}/{2}/{3}";
+        }
     }
 
     public enum PublishStatus

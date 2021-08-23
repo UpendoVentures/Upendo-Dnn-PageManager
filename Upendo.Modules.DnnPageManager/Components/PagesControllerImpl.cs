@@ -25,7 +25,6 @@ using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Common.Utilities;
 using Upendo.Modules.DnnPageManager.Model;
 using Upendo.Modules.DnnPageManager.Common;
-using DotNetNuke.ComponentModel;
 using Dnn.PersonaBar.Pages.Components;
 using Dnn.PersonaBar.Pages.Services.Dto;
 using AutoMapper;

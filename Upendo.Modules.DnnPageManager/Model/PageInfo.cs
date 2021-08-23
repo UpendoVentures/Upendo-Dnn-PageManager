@@ -19,6 +19,7 @@ using Upendo.Modules.DnnPageManager.Common;
 
 namespace Upendo.Modules.DnnPageManager.Model
 {
+    [Serializable]
     public class Page : TabInfo
     {
         public string PublishingStatus
@@ -49,7 +50,7 @@ namespace Upendo.Modules.DnnPageManager.Model
             get
             {
                 bool allowIndex = default(bool);
-                return (!this.TabSettings.ContainsKey("AllowIndex") || !bool.TryParse(this.TabSettings["AllowIndex"].ToString(), out allowIndex)) | allowIndex;
+                return (!this.TabSettings.ContainsKey(Constants.ALLOW_INDEX) || !bool.TryParse(this.TabSettings[Constants.ALLOW_INDEX].ToString(), out allowIndex)) | allowIndex;
             }
         }
     }
