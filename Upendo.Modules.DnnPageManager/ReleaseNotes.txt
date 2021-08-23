@@ -7,9 +7,10 @@
 
 	<p>Version 01.00.01</p>
 	<ul>
-		<li>Improves web service error logging.</li>
-		<li>Improves string handling for performance.</li>
-		<li>Resolves a compatibility bug with 2sxc and Evoq.</li>
+		<li>Resolved a compatibility bug with 2sxc and Evoq.</li>
+		<li>Improved web service error logging.</li>
+		<li>Improved string handling for performance.</li>
+		<li>Improved caching support for Microsoft Azure.</li>
 	</ul>
 
 	<p>Version 01.00.00</p>

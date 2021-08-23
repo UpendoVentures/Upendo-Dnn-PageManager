@@ -49,12 +49,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
             int tabId = _moduleContext.TabId;
             ModuleInfo module = new ModuleController().GetModule(moduleId, tabId);
 
-            string moduleDirectory = "/" + _moduleContext.Configuration.ModuleControl.ControlSrc;
+            string moduleDirectory = string.Concat(Constants.SLASH, _moduleContext.Configuration.ModuleControl.ControlSrc);
             moduleDirectory = moduleDirectory.Substring(0, moduleDirectory.LastIndexOf('/') + 1);
 
             switch (propertyName.ToLower())
             {
-                case "all":
+                case Constants.Properties.PROPERTY_ALL:
                     dynamic properties = new ExpandoObject();
                     properties.Resources = GetResources(module);
                     properties.Settings = _moduleContext.Settings;
@@ -74,18 +74,18 @@ namespace Upendo.Modules.DnnPageManager.Controller
 
                     return JsonConvert.SerializeObject(properties);
 
-                case "modulepath":
+                case Constants.Properties.PROPERTY_MODULEPATH:
                     return moduleDirectory;
-                case "approotangularbegin":
-                    return "<app-root-" + moduleId + ">";
-                case "approotangularend":
-                    return "</app-root-" + moduleId + ">";
-                case "ModuleId":
+                case Constants.Properties.PROPERTY_APPROOT_BEGIN:
+                    return string.Format(Constants.Properties.APPROOT_OPEN, moduleId);
+                case Constants.Properties.PROPERTY_APPROOT_END:
+                    return string.Format(Constants.Properties.APPROOT_CLOSE, moduleId);
+                case Constants.Properties.PROPERTY_MODULEID:
                     return _moduleContext.ModuleId.ToString();
-                case "rawurl":
+                case Constants.Properties.PROPERTY_RAWURL:
                     return HttpContext.Current.Request.RawUrl;
-                case "test":
-                    return "test";
+                case Constants.Properties.PROPERTY_TEST:
+                    return Constants.Properties.PROPERTY_TEST;
 
             }
             return string.Empty;
@@ -99,16 +99,16 @@ namespace Upendo.Modules.DnnPageManager.Controller
         private Dictionary<string, string> GetResources(ModuleInfo module)
         {
             var currentLanguage = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-            System.IO.FileInfo fi = new System.IO.FileInfo(HttpContext.Current.Server.MapPath("~/" + _moduleContext.Configuration.ModuleControl.ControlSrc + "." + currentLanguage + ".resx"));
-            string physResourceFile = string.Format("{0}/{1}/{2}", fi.DirectoryName, Constants.Resources, fi.Name);
-            string relResourceFile = string.Format("/{0}/{1}/{2}/{3}", Constants.DesktopModules, module.DesktopModule.FolderName, Constants.Resources, fi.Name);
+            System.IO.FileInfo fi = new System.IO.FileInfo(HttpContext.Current.Server.MapPath(string.Format(Constants.Properties.LOCALIZATION_PATH_FORMAT, _moduleContext.Configuration.ModuleControl.ControlSrc, currentLanguage)));
+            string physResourceFile = string.Format(Constants.Properties.PHYSICAL_FILE_FORMAT, fi.DirectoryName, Constants.Resources, fi.Name);
+            string relResourceFile = string.Format(Constants.Properties.RELATIVE_FILE_FORMAT, Constants.DesktopModules, module.DesktopModule.FolderName, Constants.Resources, fi.Name);
             if (File.Exists(physResourceFile))
             {
                 using (var rsxr = new ResXResourceReader(physResourceFile))
                 {
                     var res = rsxr.OfType<DictionaryEntry>()
                         .ToDictionary(
-                            entry => entry.Key.ToString().Replace(".", "_"),
+                            entry => entry.Key.ToString().Replace(Constants.DOT, Constants.UNDERSCORE),
                             entry => Localization.GetString(entry.Key.ToString(), relResourceFile));
 
                     return res;
