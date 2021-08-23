@@ -50,10 +50,15 @@
       <HintPath>$(DnnReferencePath)\DotNetNuke.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNetNuke.DependencyInjection, Version=9.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke.DependencyInjection">
       <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
       <HintPath>$(DnnReferencePath)\DotNetNuke.DependencyInjection.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotNetNuke.Instrumentation">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(DnnReferencePath)\DotNetNuke.Instrumentation.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web">
       <SpecificVersion>False</SpecificVersion>
@@ -62,7 +67,7 @@
     </Reference>
     <Reference Include="DotNetNuke.Web.Client">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\DNN\09.06.01\DotNetNuke.Web.Client.dll</HintPath>
+      <HintPath>$(DnnReferencePath)\DotNetNuke.Web.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility">
@@ -70,25 +75,25 @@
       <HintPath>$(DnnReferencePath)\DotNetNuke.WebUtility.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(DnnReferencePath)\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(DnnReferencePath)\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="System.Net.Http.Formatting">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(DnnReferencePath)\System.Net.Http.Formatting.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(DnnReferencePath)\System.Web.Http.dll</HintPath>
       <Private>False</Private>
@@ -121,6 +126,7 @@
     <None Include="app.config" />
     <None Include="Module.build" />
     <None Include="packages.config" />
+    <None Include="Upendo.Modules.DnnPageManager_Symbols.dnn" />
     <None Include="Upendo.Modules.DnnPageManager.dnn" />
   </ItemGroup>
   <ItemGroup>

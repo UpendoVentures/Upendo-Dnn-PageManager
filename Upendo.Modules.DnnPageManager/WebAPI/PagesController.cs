@@ -20,6 +20,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DotNetNuke.Common.Utilities;
+using DotNetNuke.Instrumentation;
 using Upendo.Modules.DnnPageManager.Common;
 using Upendo.Modules.DnnPageManager.Components;
 using DotNetNuke.Security;
@@ -29,18 +30,10 @@ namespace Upendo.Modules.DnnPageManager.Controller
 {
     public class PagesController : DnnApiController
     {
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
 
-        private readonly IPagesControllerImpl pageController;
-        private readonly ISecurityService securityService;
-
-        public PagesController() : this(PagesControllerImpl.Instance, SecurityService.Instance)
+        public PagesController() 
         {
-        }
-
-        public PagesController(IPagesControllerImpl pageController, ISecurityService securityService)
-        {
-            this.pageController = pageController;
-            this.securityService = securityService;
         }
 
         [HttpGet]
@@ -53,12 +46,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
 
             try
             {
-
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
 
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pages = pageController.GetPagesList(portalId: portalId,
                                                          total: out total,
@@ -77,7 +70,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     Keywords = p.KeyWords,
                     Priority = p.SiteMapPriority,
                     PrimaryUrl = pageController.GetPageUrls(p.PortalID, p.TabID).FirstOrDefault().Path,
-                    LastUpdated = string.Format("{0} {1} {2}", (p.LastModifiedByUserID == Null.NullInteger ? "System" : p.LastModifiedByUser(portalId).FirstName), (p.LastModifiedByUserID == Null.NullInteger ? "Account" : p.LastModifiedByUser(portalId).LastName), p.LastModifiedOnDate.ToString("MM/dd/yyyy hh:mm")),
+                    LastUpdated = string.Format(Constants.FORMAT_LASTUPDATED, (p.LastModifiedByUserID == Null.NullInteger ? Constants.SYSTEM : p.LastModifiedByUser(portalId).FirstName), (p.LastModifiedByUserID == Null.NullInteger ? Constants.ACCOUNT : p.LastModifiedByUser(portalId).LastName), p.LastModifiedOnDate.ToString(Constants.FORMAT_DATE)),
                     IsVisible = p.IsVisible,
                     IsAllowedSearch = p.AllowIndex,
                     IsDisabled = p.DisableLink,
@@ -92,11 +85,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 {
                     switch (sortBy.ToLowerInvariant())
                     {
-                        case "name":
-                            result = sortOrder == "asc" ? result.OrderBy(x => x.Name) : result.OrderByDescending(x => x.Name);
+                        case Constants.NAME:
+                            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Name) : result.OrderByDescending(x => x.Name);
                             break;
-                        case "title":
-                            result = sortOrder == "asc" ? result.OrderBy(x => x.Title) : result.OrderByDescending(x => x.Title);
+                        case Constants.TITLE:
+                            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Title) : result.OrderByDescending(x => x.Title);
                             break;
                         default:
                             break;
@@ -107,8 +100,9 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
 
         }
@@ -121,10 +115,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pageModules = pageController.GetPageModules(portalId, tabId);
                 var result = pageModules.Select(m => new
@@ -137,8 +133,9 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -150,10 +147,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pageUrls = pageController.GetPageUrls(portalId, tabId);
 
@@ -161,15 +159,16 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 {
                     Url = m.Path,
                     UrlType = m.StatusCode.Value,
-                    GeneratedBy = m.IsSystem ? "Automatic" : m.UserName
+                    GeneratedBy = m.IsSystem ? Constants.AUTOMATIC : m.UserName
                 });
 
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK, result); ;
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -182,10 +181,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var pagePermissions = pageController.GetPagePermissions(portalId, tabId);
 
@@ -197,8 +198,8 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                         PermissionID = p.FirstOrDefault().PermissionID,
                                         RoleId = p.Key,
                                         RoleName = p.FirstOrDefault().RoleName,
-                                        View = p.Where(x => x.PermissionKey == "VIEW").Count() > 0 ? p.Where(x => x.PermissionKey == "VIEW").FirstOrDefault().AllowAccess : false,
-                                        Edit = p.Where(x => x.PermissionKey == "EDIT").Count() > 0 ? p.Where(x => x.PermissionKey == "EDIT").FirstOrDefault().AllowAccess : false
+                                        View = p.Where(x => x.PermissionKey == Constants.VIEW).Count() > 0 ? p.Where(x => x.PermissionKey == Constants.VIEW).FirstOrDefault().AllowAccess : false,
+                                        Edit = p.Where(x => x.PermissionKey == Constants.EDIT).Count() > 0 ? p.Where(x => x.PermissionKey == Constants.EDIT).FirstOrDefault().AllowAccess : false
                                     });
 
                 var usersResult = pagePermissions
@@ -209,8 +210,8 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                         PermissionID = p.FirstOrDefault().PermissionID,
                                         UserId = p.Key,
                                         UserName = p.FirstOrDefault().Username,
-                                        View = p.Where(x => x.PermissionKey == "VIEW").Count() > 0 ? p.Where(x => x.PermissionKey == "VIEW").FirstOrDefault().AllowAccess : false,
-                                        Edit = p.Where(x => x.PermissionKey == "EDIT").Count() > 0 ? p.Where(x => x.PermissionKey == "EDIT").FirstOrDefault().AllowAccess : false
+                                        View = p.Where(x => x.PermissionKey == Constants.VIEW).Count() > 0 ? p.Where(x => x.PermissionKey == Constants.VIEW).FirstOrDefault().AllowAccess : false,
+                                        Edit = p.Where(x => x.PermissionKey == Constants.EDIT).Count() > 0 ? p.Where(x => x.PermissionKey == Constants.EDIT).FirstOrDefault().AllowAccess : false
                                     });
 
 
@@ -218,8 +219,9 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -231,14 +233,15 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError("Page name is required!") { { "IsSuccess", false } });
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(Constants.ERROR_PAGE_NAME_REQUIRED) { { Constants.RESPONSE_SUCCESS, false } });
                 }
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Name, name);
@@ -246,8 +249,9 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -259,18 +263,20 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
 
+                PagesControllerImpl pageController = new PagesControllerImpl();
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Title, title);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -282,18 +288,20 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Description, description);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -306,18 +314,20 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Keywords, keywords);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -330,15 +340,17 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
 
+                PagesControllerImpl pageController = new PagesControllerImpl();
+
                 float pagePriority;
                 if (float.TryParse(priority, out pagePriority) == false)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError("Invalid page priority") { { "IsSuccess", false } });
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(Constants.ERROR_PAGE_PRIORITY_INVALID) { { Constants.RESPONSE_SUCCESS, false } });
                 }
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Priority, priority);
@@ -346,8 +358,9 @@ namespace Upendo.Modules.DnnPageManager.Controller
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -359,18 +372,21 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.PrimaryURL, url);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -382,18 +398,21 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Visible, visible.ToString());
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
@@ -405,24 +424,39 @@ namespace Upendo.Modules.DnnPageManager.Controller
         {
             try
             {
-                if (this.securityService.IsPagesAdminUser() == false)
+                if (SecurityService.IsPagesAdminUser() == false)
                 {
                     return this.GetForbiddenResponse();
                 }
+
+                PagesControllerImpl pageController = new PagesControllerImpl();
 
                 var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Indexed, indexed.ToString());
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { "IsSuccess", false } });
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(ex.Message) { { Constants.RESPONSE_SUCCESS, false } });
             }
         }
 
         private HttpResponseMessage GetForbiddenResponse()
         {
-            return this.Request.CreateResponse(HttpStatusCode.Forbidden, new { Message = "The user is not allowed to access this." });
+            return this.Request.CreateResponse(HttpStatusCode.Forbidden, new { Message = Constants.ERROR_FORBIDDEN });
+        }
+
+        private void LogError(Exception ex)
+        {
+            if (ex != null)
+            {
+                Logger.Error(ex.Message, ex);
+                if (ex.InnerException != null)
+                {
+                    Logger.Error(ex.InnerException.Message, ex.InnerException);
+                }
+            }
         }
     }
 }

@@ -29,26 +29,18 @@ using DotNetNuke.ComponentModel;
 using Dnn.PersonaBar.Pages.Components;
 using Dnn.PersonaBar.Pages.Services.Dto;
 using AutoMapper;
+using DotNetNuke.Instrumentation;
+using Constants = Upendo.Modules.DnnPageManager.Common.Constants;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {
-    public interface IPagesControllerImpl
+    public class PagesControllerImpl 
     {
-        IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey, int pageIndex, int pageSize, bool? deleted);
-        IEnumerable<Module> GetPageModules(int portalId, int tabId);
-        Outcome UpdatePageProperty(int portalId, int tabId, TabFields field, string fieldValue);
-        IEnumerable<Url> GetPageUrls(int portalId, int tabId);
-        IEnumerable<PermissionInfoBase> GetPagePermissions(int portalId, int tabId);
-    }
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesControllerImpl));
 
-    public class PagesControllerImpl : IPagesControllerImpl
-    {
-        private readonly ITabController _tabController;
-        private readonly IModuleController _moduleController;
-        private readonly IPortalController _portalController;
         private static IMapper Mapper;
 
-        public PagesControllerImpl() : this(TabController.Instance, ModuleController.Instance, PortalController.Instance)
+        public PagesControllerImpl() 
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -56,27 +48,6 @@ namespace Upendo.Modules.DnnPageManager.Components
                 cfg.CreateMap<TabInfo, Page>();
             });
             Mapper = config.CreateMapper();
-        }
-
-        public PagesControllerImpl(ITabController tabController, IModuleController moduleController, IPortalController portalController)
-        {
-            this._tabController = tabController;
-            this._moduleController = moduleController;
-            this._portalController = portalController;
-        }
-
-        public static IPagesControllerImpl Instance
-        {
-            get
-            {
-                var controller = ComponentFactory.GetComponent<IPagesControllerImpl>("PagesControllerImpl");
-                if (controller == null)
-                {
-                    ComponentFactory.RegisterComponent<IPagesControllerImpl, PagesControllerImpl>("PagesControllerImpl");
-                }
-
-                return ComponentFactory.GetComponent<IPagesControllerImpl>("PagesControllerImpl");
-            }
         }
 
         public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10, bool? deleted = false)
@@ -124,6 +95,7 @@ namespace Upendo.Modules.DnnPageManager.Components
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 total = 0;
                 return new List<Page>();
@@ -135,7 +107,7 @@ namespace Upendo.Modules.DnnPageManager.Components
         {
             try
             {
-                var tabModules = this._moduleController.GetTabModules(tabId)
+                var tabModules = ModuleController.Instance.GetTabModules(tabId)
                                         .Values
                                         .Where(m => !m.IsDeleted)
                                         .Select(m => Mapper.Map<Module>(m));
@@ -144,6 +116,7 @@ namespace Upendo.Modules.DnnPageManager.Components
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
             }
 
@@ -160,7 +133,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                     return new Outcome()
                     {
                         Success = false,
-                        ErrorMessage = "Invalid TabId"
+                        ErrorMessage = Constants.ERROR_PAGE_TABID_INVALID
                     };
                 }
 
@@ -176,7 +149,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                         return new Outcome()
                         {
                             Success = false,
-                            ErrorMessage = "Page Name is required."
+                            ErrorMessage = Constants.ERROR_PAGE_NAME_REQUIRED
                         };
                     }
                     tab.TabName = fieldValue;
@@ -210,7 +183,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                         return new Outcome()
                         {
                             Success = false,
-                            ErrorMessage = "Priority needs to be between 0 to 1"
+                            ErrorMessage = Constants.ERROR_PAGE_PRIORITY_RANGE_INVALID
                         };
                     }
 
@@ -233,16 +206,17 @@ namespace Upendo.Modules.DnnPageManager.Components
                 return new Outcome()
                 {
                     Success = true,
-                    ErrorMessage = "Successfully updated!"
+                    ErrorMessage = Constants.SUCCESS_UPDATED
                 };
             }
             catch (Exception ex)
             {
+                LogError(ex);
                 Exceptions.LogException(ex);
                 return new Outcome()
                 {
                     Success = false,
-                    ErrorMessage = string.Format("Error updating value for {0}. Error: ", field.ToString(), ex.ToString())
+                    ErrorMessage = string.Format(Constants.ERROR_FORMAT_UPDATE_VALUE, field.ToString(), ex.Message)
                 };
             }
         }
@@ -262,8 +236,8 @@ namespace Upendo.Modules.DnnPageManager.Components
                 return new Outcome()
                 {
                     Success = false,
-                    ErrorMessage = "Page Url value ", //CustomUrlPathCleaned
-                    Suggestion = "/" + urlPath
+                    ErrorMessage = Constants.ERROR_PAGE_URL_VALUE, //CustomUrlPathCleaned
+                    Suggestion = string.Concat(Constants.SLASH, urlPath)
                 };
             }
 
@@ -274,8 +248,8 @@ namespace Upendo.Modules.DnnPageManager.Components
                 return new Outcome()
                 {
                     Success = false,
-                    ErrorMessage = "Page Url value is not unique", //UrlPathNotUnique
-                    Suggestion = "/" + urlPath
+                    ErrorMessage = Constants.ERROR_PAGE_URL_NOT_UNIQUE, //UrlPathNotUnique
+                    Suggestion = string.Concat(Constants.SLASH, urlPath)
                 };
             }
 
@@ -286,8 +260,8 @@ namespace Upendo.Modules.DnnPageManager.Components
                 return new Outcome
                 {
                     Success = false,
-                    ErrorMessage = "Page Url value is duplicate", //DuplicateUrl
-                    Suggestion = "/" + urlPath
+                    ErrorMessage = Constants.ERROR_PAGE_URL_DUPLICATE, //DuplicateUrl
+                    Suggestion = string.Concat(Constants.SLASH, urlPath)
                 };
             }
 
@@ -302,7 +276,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                 QueryString = string.Empty,
                 Url = urlPath.ValueOrEmpty(),
                 CultureCode = portalSettings.CultureCode,
-                HttpStatus = "200",
+                HttpStatus = Constants.RESPONSE_STATUS_200,
                 IsSystem = false,
             };
 
@@ -318,19 +292,46 @@ namespace Upendo.Modules.DnnPageManager.Components
 
         public IEnumerable<Url> GetPageUrls(int portalId, int tabId)
         {
-            var tab = TabController.Instance.GetTab(tabId, portalId);
-            var pageUrls = PageUrlsController.Instance.GetPageUrls(tab, portalId);
+            try
+            {
+                var tab = TabController.Instance.GetTab(tabId, portalId);
+                var pageUrls = PageUrlsController.Instance.GetPageUrls(tab, portalId);
 
-            return pageUrls;
+                return pageUrls;
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
+            }
         }
 
         public IEnumerable<PermissionInfoBase> GetPagePermissions(int portalId, int tabId)
         {
-            var tab = TabController.Instance.GetTab(tabId, portalId);
-            var pagePermissions = tab.TabPermissions.ToList();
+            try
+            {
+                var tab = TabController.Instance.GetTab(tabId, portalId);
+                var pagePermissions = tab.TabPermissions.ToList();
 
-            return pagePermissions;
+                return pagePermissions;
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
+            }
+        }
 
+        private static void LogError(Exception ex)
+        {
+            if (ex != null)
+            {
+                Logger.Error(ex.Message, ex);
+                if (ex.InnerException != null)
+                {
+                    Logger.Error(ex.InnerException.Message, ex.InnerException);
+                }
+            }
         }
     }
 }

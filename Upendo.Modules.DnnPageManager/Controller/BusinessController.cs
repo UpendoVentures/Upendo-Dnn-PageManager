@@ -23,20 +23,6 @@ namespace Upendo.Modules.DnnPageManager.Controller
 {
     public class BusinessController : ICustomTokenProvider
     {
-        private static BusinessController _instance;
-
-        public static BusinessController Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new BusinessController();
-                }
-                return _instance;
-            }
-        }
-
         public IDictionary<string, IPropertyAccess> GetTokens(Page page, ModuleInstanceContext moduleContext)
         {
             var tokens = new Dictionary<string, IPropertyAccess>();

@@ -13,38 +13,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using DotNetNuke.ComponentModel;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
+using DotNetNuke.Instrumentation;
+using Upendo.Modules.DnnPageManager.Common;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {
-
-    public interface ISecurityService
+    public class SecurityService 
     {
-        bool IsPagesAdminUser();
-    }
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(SecurityService));
 
-    public class SecurityService : ISecurityService
-    {
-        public static ISecurityService Instance
+        public static bool IsPagesAdminUser()
         {
-            get
+            try
             {
-                var controller = ComponentFactory.GetComponent<ISecurityService>("SecurityService");
-                if (controller == null)
-                {
-                    ComponentFactory.RegisterComponent<ISecurityService, SecurityService>("SecurityService");
-                }
-
-                return ComponentFactory.GetComponent<ISecurityService>("SecurityService");
+                var user = UserController.Instance.GetCurrentUserInfo();
+                return user.IsSuperUser || user.IsInRole(PortalSettings.Current?.AdministratorRoleName);
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
             }
         }
 
-        public virtual bool IsPagesAdminUser()
+        private static void LogError(Exception ex)
         {
-            var user = UserController.Instance.GetCurrentUserInfo();
-            return user.IsSuperUser || user.IsInRole(PortalSettings.Current?.AdministratorRoleName);
+            if (ex != null)
+            {
+                Logger.Error(ex.Message, ex);
+                if (ex.InnerException != null)
+                {
+                    Logger.Error(ex.InnerException.Message, ex.InnerException);
+                }
+            }
         }
     }
 }
