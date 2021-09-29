@@ -35,7 +35,7 @@
         mat-cell
         *matCellDef="let element"
       >
-        <mat-icon (click)="redirectToPage(element)" class="link-icon">link</mat-icon>
+        <mat-icon (click)="redirectToPage(element)" class="link-icon" title="Show page">link</mat-icon>
         <span (dblclick)="edit(element.Id, element.Name, 'Name')">{{ element.Name }}</span>
       </td>
     </ng-container>
@@ -116,7 +116,7 @@
     <ng-container matColumnDef="settings">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" align="center">
-        <mat-icon (click)="openPageModules(element)">view_in_ar</mat-icon>
+        <mat-icon (click)="openPageModules(element)" title="Show Module list">view_in_ar</mat-icon>
       </td>
     </ng-container>
 
@@ -127,12 +127,14 @@
           *ngIf="element.IsIndexed"
           (dblclick)="updateIndexing(element, false)"
           align="center"
+          title="Disable page Index"
           >zoom_in</mat-icon
         >
         <mat-icon
           *ngIf="!element.IsIndexed"
           (dblclick)="updateIndexing(element, true)"
           align="center"
+          title="Enable page Index"
           >zoom_out</mat-icon
         >
       </td>
@@ -144,11 +146,13 @@
         <mat-icon
           *ngIf="element.IsVisible"
           (dblclick)="updateVisibility(element, false)"
+          title="Hide in Menu"
           >visibility</mat-icon
         >
         <mat-icon
           *ngIf="!element.IsVisible"
           (dblclick)="updateVisibility(element, true)"
+          title="Show in Menu"
           >visibility_off</mat-icon
         >
       </td>
@@ -157,10 +161,10 @@
     <ng-container matColumnDef="accessibility">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.HasBeenPublished"
+        <mat-icon *ngIf="element.HasBeenPublished" title="Page has been published"
           >radio_button_unchecked</mat-icon
         >
-        <mat-icon *ngIf="!element.HasBeenPublished">check_circle</mat-icon>
+        <mat-icon *ngIf="!element.HasBeenPublished" title="Page not been published">check_circle</mat-icon>
       </td>
     </ng-container>
 
