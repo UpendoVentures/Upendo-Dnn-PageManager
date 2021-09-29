@@ -86,8 +86,9 @@
 <a
     class="button"
     mat-flat-button
-    (click)="edit()"
+    (click)="!isEditDisabled && edit()"
     disableRipple
+    [disabled]="isEditDisabled"
   >
     Edit
 </a>
