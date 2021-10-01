@@ -138,7 +138,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
         new GetAllPages(
           portalId,
           !!searchValue ? searchValue : this.searchText,
-          this.paginator ? this.paginator.pageIndex : 0,
+          this.paginator ? !!searchValue ? 0 : this.paginator.pageIndex : 0,
           this.paginator ? this.paginator.pageSize : 10,
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction
