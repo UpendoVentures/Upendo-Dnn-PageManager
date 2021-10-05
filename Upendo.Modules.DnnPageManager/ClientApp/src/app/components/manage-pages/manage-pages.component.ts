@@ -236,6 +236,10 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
+  isNullOrEmpty(data: String) {
+    return data ? data : 'no value';
+  }
+
   clearSearch(): void {
     this.searchText = '';
     localStorage.setItem('searchText', '');

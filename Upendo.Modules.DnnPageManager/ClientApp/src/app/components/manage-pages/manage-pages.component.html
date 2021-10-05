@@ -36,7 +36,7 @@
         *matCellDef="let element"
       >
         <mat-icon (click)="redirectToPage(element)" class="link-icon" title="Show page">link</mat-icon>
-        <span (dblclick)="edit(element.Id, element.Name, 'Name')">{{ element.Name }}</span>
+        <span (dblclick)="edit(element.Id, element.Name, 'Name')">{{ isNullOrEmpty(element.Name) }}</span>
       </td>
     </ng-container>
 
@@ -47,7 +47,7 @@
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Title, 'Title')"
       >
-        <span>{{ element.Title }}</span>
+        <span>{{ isNullOrEmpty(element.Title) }}</span>
       </td>
     </ng-container>
 
@@ -58,7 +58,7 @@
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Description, 'Description')"
       >
-        <span>{{ element.Description }}</span>
+        <span>{{ isNullOrEmpty(element.Description) }}</span>
       </td>
     </ng-container>
 
@@ -69,7 +69,7 @@
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Keywords, 'Keywords')"
       >
-        <span>{{ element.Keywords }}</span>
+        <span>{{ isNullOrEmpty(element.Keywords) }}</span>
       </td>
     </ng-container>
 
@@ -92,7 +92,7 @@
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.PrimaryUrl, 'PrimaryUrl')"
       >
-        <span>{{ element.PrimaryUrl }}</span>
+        <span>{{ isNullOrEmpty(element.PrimaryUrl) }}</span>
       </td>
     </ng-container>
 
@@ -110,7 +110,7 @@
 
     <ng-container matColumnDef="lastUpdated">
       <th mat-header-cell *matHeaderCellDef width="10%">Last Updated</th>
-      <td mat-cell *matCellDef="let element">{{ element.LastUpdated }}</td>
+      <td mat-cell *matCellDef="let element">{{ isNullOrEmpty(element.LastUpdated) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="settings">
