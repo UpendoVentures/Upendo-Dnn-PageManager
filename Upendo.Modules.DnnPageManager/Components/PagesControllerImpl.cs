@@ -49,7 +49,7 @@ namespace Upendo.Modules.DnnPageManager.Components
             Mapper = config.CreateMapper();
         }
 
-        public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10, bool? deleted = false)
+        public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "", string sortType = "", bool? deleted = false)
         {
             try
             {
@@ -90,6 +90,24 @@ namespace Upendo.Modules.DnnPageManager.Components
                 if (visible.HasValue)
                 {
                     pages = pages.Where(tab => tab.IsVisible == visible);
+                }
+
+                string sortOn = sortBy.ToLowerInvariant();
+                string sortOrder = sortType.ToLowerInvariant();
+
+                if (String.IsNullOrEmpty(sortBy) == false)
+                {
+                    switch (sortBy.ToLowerInvariant())
+                    {
+                        case Constants.NAME:
+                            pages = sortOrder == Constants.ASC ? pages.OrderBy(x => x.LocalizedTabName) : pages.OrderByDescending(x => x.LocalizedTabName);
+                            break;
+                        case Constants.TITLE:
+                            pages = sortOrder == Constants.ASC ? pages.OrderBy(x => x.Title) : pages.OrderByDescending(x => x.Title);
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 finalList.AddRange(pages);
