@@ -125,16 +125,16 @@
       <td mat-cell *matCellDef="let element">
         <mat-icon
           *ngIf="element.IsIndexed"
-          (dblclick)="updateIndexing(element, false)"
           align="center"
-          title="Disable page Index"
+          title="Page index disabled"
+          class="c-default"
           >zoom_in</mat-icon
         >
         <mat-icon
           *ngIf="!element.IsIndexed"
-          (dblclick)="updateIndexing(element, true)"
           align="center"
-          title="Enable page Index"
+          title="Page indexed"
+          class="c-default"
           >zoom_out</mat-icon
         >
       </td>
@@ -161,10 +161,10 @@
     <ng-container matColumnDef="accessibility">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.HasBeenPublished" title="Page has been published"
-          >radio_button_unchecked</mat-icon
+        <mat-icon *ngIf="element.HasBeenPublished" title="Page has been published" class="c-default"
+          >check_circle</mat-icon
         >
-        <mat-icon *ngIf="!element.HasBeenPublished" title="Page not been published">check_circle</mat-icon>
+        <mat-icon *ngIf="!element.HasBeenPublished" title="Page not been published" class="c-default">radio_button_unchecked</mat-icon>
       </td>
     </ng-container>
 
