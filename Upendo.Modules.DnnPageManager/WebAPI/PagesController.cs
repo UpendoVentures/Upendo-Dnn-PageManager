@@ -58,6 +58,8 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                                          searchKey: searchKey,
                                                          pageIndex: pageIndex,
                                                          pageSize: pageSize,
+                                                         sortBy: sortBy,
+                                                         sortType: sortType,
                                                          deleted: deleted
                                                         );
 
@@ -78,23 +80,23 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     HasBeenPublished = p.HasBeenPublished
                 });
 
-                string sortOn = sortBy.ToLowerInvariant();
-                string sortOrder = sortType.ToLowerInvariant();
+                //string sortOn = sortBy.ToLowerInvariant();
+                //string sortOrder = sortType.ToLowerInvariant();
 
-                if (String.IsNullOrEmpty(sortBy) == false)
-                {
-                    switch (sortBy.ToLowerInvariant())
-                    {
-                        case Constants.NAME:
-                            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Name) : result.OrderByDescending(x => x.Name);
-                            break;
-                        case Constants.TITLE:
-                            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Title) : result.OrderByDescending(x => x.Title);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                //if (String.IsNullOrEmpty(sortBy) == false)
+                //{
+                //    switch (sortBy.ToLowerInvariant())
+                //    {
+                //        case Constants.NAME:
+                //            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Name) : result.OrderByDescending(x => x.Name);
+                //            break;
+                //        case Constants.TITLE:
+                //            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Title) : result.OrderByDescending(x => x.Title);
+                //            break;
+                //        default:
+                //            break;
+                //    }
+                //}
 
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = total.ToString(), result });
             }

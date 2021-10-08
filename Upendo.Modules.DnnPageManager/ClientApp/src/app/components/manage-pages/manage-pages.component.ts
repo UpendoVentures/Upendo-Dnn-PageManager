@@ -98,7 +98,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.getPages(false);
+      this.getPages(false, true);
     }, 1000);
 
     this.paginator.page
@@ -109,7 +109,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
-  getPages(showClearSearch: boolean): void {
+  getPages(showClearSearch: boolean, isInit: boolean = false): void {
     if (
       this.searchText.length > 0 ||
       (showClearSearch && this.searchText.length === 0)
@@ -124,7 +124,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       localStorage.setItem(
         'sortBy',
-        !!this.sort?.active ? this.sort?.active : 'undefined'
+        !!this.sort?.active ? this.sort?.active : isInit ? 'name' : 'undefined'
       );
     }
 
@@ -236,7 +236,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
-  isNullOrEmpty(data: String) {
+  isNullOrEmpty(data: string) {
     return data ? data : 'no value';
   }
 
