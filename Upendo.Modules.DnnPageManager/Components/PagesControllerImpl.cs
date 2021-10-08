@@ -71,7 +71,12 @@ namespace Upendo.Modules.DnnPageManager.Components
                                         ((string.IsNullOrEmpty(searchKey) && includeSubpages)
                                             || (string.IsNullOrEmpty(searchKey) == false &&
                                                     (t.TabName.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger
-                                                        || t.LocalizedTabName.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger)))
+                                                        || t.LocalizedTabName.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger
+                                                        || t.Title.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger
+                                                        || t.Description.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger
+                                                        || t.KeyWords.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger
+                                                        || t.Url.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) > Null.NullInteger
+                                                        )))
                             select Mapper.Map<Page>(t);
 
                 pages = includeSubpages ? pages.OrderBy(x => x.ParentId > -1 ? x.ParentId : x.TabID).ThenBy(x => x.TabID) : pages;
