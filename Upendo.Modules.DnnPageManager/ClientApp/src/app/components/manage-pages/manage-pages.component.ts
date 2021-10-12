@@ -115,6 +115,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       (showClearSearch && this.searchText.length === 0)
     ) {
       localStorage.setItem('searchText', this.searchText);
+      this.paginator.pageIndex = 0;
     }
 
     if (!!this.sort) {
