@@ -1,23 +1,12 @@
 <div class="search-bar">
   <mat-form-field class="example-form-field" appearance="outline">
     <mat-icon matPrefix>search</mat-icon>
-    <input
-      matInput
-      type="text"
-      [(ngModel)]="searchText"
-      (keydown.enter)="getPages(true)"
-    />
+    <mat-label>Search</mat-label>
+    <input matInput type="text" [(ngModel)]="searchText" (keydown.enter)="getPages(true)">
+    <button *ngIf="showClearSearch && searchText.length > 0" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
-  <a
-    class="clear-search"
-    *ngIf="showClearSearch && searchText.length > 0"
-    mat-stroked-button
-    color="primary"
-    (click)="clearSearch()"
-    disableRipple
-  >
-    X
-  </a>
 </div>
 <div>
   <table
