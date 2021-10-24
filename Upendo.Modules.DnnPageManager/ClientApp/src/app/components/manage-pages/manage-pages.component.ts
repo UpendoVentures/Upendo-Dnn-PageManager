@@ -118,6 +118,9 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.paginator.pageIndex = 0;
     }
 
+    if (isInit)
+      this.paginator.pageIndex = 0;
+
     if (!!this.sort) {
       localStorage.setItem(
         'sortType',
@@ -139,7 +142,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
         new GetAllPages(
           portalId,
           !!searchValue ? searchValue : this.searchText,
-          this.paginator ? !!searchValue ? 0 : this.paginator.pageIndex : 0,
+          this.paginator ? !!searchValue || isInit ? 0 : this.paginator.pageIndex : 0,
           this.paginator ? this.paginator.pageSize : 10,
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction
@@ -162,7 +165,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sortData(): void {
-    this.getPages(this.searchText.length > 0);
+    this.getPages(this.searchText.length > 0, true);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean): number {
