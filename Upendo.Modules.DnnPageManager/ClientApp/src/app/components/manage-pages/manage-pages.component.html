@@ -1,4 +1,5 @@
 <div class="search-bar">
+  <span>Double-clicking on some values with dashed border allows you to edit them.</span>
   <mat-form-field class="example-form-field" appearance="outline">
     <mat-icon matPrefix>search</mat-icon>
     <mat-label>Search</mat-label>
@@ -25,13 +26,14 @@
         *matCellDef="let element"
       >
         <mat-icon (click)="redirectToPage(element)" class="link-icon" title="Show page">link</mat-icon>
-        <span (dblclick)="edit(element.Id, element.Name, 'Name')">{{ isNullOrEmpty(element.Name) }}</span>
+        <span class="dblclick" (dblclick)="edit(element.Id, element.Name, 'Name')">{{ isNullOrEmpty(element.Name) }}</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="title">
       <th mat-sort-header="title" mat-header-cell *matHeaderCellDef>Title</th>
       <td
+        class="dblclick"
         mat-cell
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Title, 'Title')"
@@ -43,6 +45,7 @@
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef>Description</th>
       <td
+        class="dblclick"
         mat-cell
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Description, 'Description')"
@@ -54,6 +57,7 @@
     <ng-container matColumnDef="keywords">
       <th mat-header-cell *matHeaderCellDef>Keywords</th>
       <td
+        class="dblclick"
         mat-cell
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Keywords, 'Keywords')"
@@ -65,6 +69,7 @@
     <ng-container matColumnDef="priority">
       <th mat-header-cell *matHeaderCellDef>Priority</th>
       <td
+        class="dblclick"
         mat-cell
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.Priority, 'Priority')"
@@ -77,6 +82,7 @@
     <ng-container matColumnDef="primaryUrl">
       <th mat-header-cell *matHeaderCellDef>Primary URL</th>
       <td
+        class="dblclick"
         mat-cell
         *matCellDef="let element"
         (dblclick)="edit(element.Id, element.PrimaryUrl, 'PrimaryUrl')"
@@ -88,6 +94,7 @@
     <ng-container matColumnDef="permissions">
       <th mat-header-cell *matHeaderCellDef>Permissions</th>
       <td
+        class="dblclick"
         mat-cell
         *matCellDef="let element"
         (dblclick)="editPermissions(element)"

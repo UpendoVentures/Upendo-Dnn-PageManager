@@ -18,6 +18,11 @@ td
    &:first-child,
    &:nth-child(2)
       white-space: nowrap
+   
+span.dblclick,
+td.dblclick span
+      border-bottom: dashed 1px #c1c3cd
+      cursor: pointer
 
 tr:not(.mat-header-row):hover
    background-color: #f3f3f3
@@ -35,7 +40,8 @@ mat-icon
    margin-right: 7px
 
 .search-bar
-   text-align: right
+   display: flex
+   justify-content: space-between
    margin-bottom: 10px
    mat-form-field
       width: 400px
