@@ -1,1 +1,1 @@
-ng build --output-hashing none
+ng build --output-hashing none --configuration development
