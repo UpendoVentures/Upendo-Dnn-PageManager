@@ -1,20 +1,82 @@
 <style>
 	div.uv-install-wrapper h3, div.uv-install-wrapper h4, div.uv-install-wrapper p, div.uv-install-wrapper hr, div.uv-install-wrapper ul { margin-bottom: 0.5em; }
 	div.uv-install-wrapper ul { padding-left: 2em; }
+	.muy-importante { color:red;font-weight:bold; }
 </style>
 <div class="uv-install-wrapper">
 	<h2>Page Manager Module for DNN</h2>
+	<hr />
+	<div class="dnnClear">
 
-	<p>Version 01.00.01</p>
-	<ul>
-		<li>Resolved a compatibility bug with 2sxc and Evoq.</li>
-		<li>Improved web service error logging.</li>
-		<li>Improved string handling for performance.</li>
-		<li>Improved caching support for Microsoft Azure.</li>
-	</ul>
+		<p class="muy-importante">The release notes continue after the Sponsors and Contributors below.</p>
+	
+		<h3>Sponsors</h3>
+		<p>Open-source is not free. We're so GRATEFUL for the following people/organizations for <a href="https://github.com/sponsors/hismightiness" target="_blank">sponsoring developers</a> to work on this release!</p>
+		<p>Sponsorship is <em>Powered by GitHub Sponsors</em> and ensures that this project lives and thrives. <a href="https://github.com/sponsors/hismightiness" target="_blank">Please consider contributing</a> any amount.</p>
+		<p>THANK YOU to the following rockstars!</p>
+		<ul>
+			<li>David Poindexter, <a href="https://nvisionative.com/" target="_blank">nvisionative</a></li>
+			<li>Dan Rice, <a href="https://www.puresystems.co.uk/" target="_blank">Pure Systems</a></li>
+			<li>Matt Rutledge, <a href="https://beleivekids.com/" target="_blank">Believe Kids</a></li>
+			<li>Adam Bernstein, <a href="https://practicewise.com/" target="_blank">PracticeWise</a></li>
+			<li>Aaron Lopez, <a href="https://wolfxmachina.com/" target="_blank">Wolf X Machina</a></li>
+		</ul>
+	
+		<h3>Contributors</h3>
+		<p>THANK YOU to the following community members for participating in this release!</p>
+		<ul>
+			<li>Will Strohl, <a href="https://upendoventures.com/How/People/Will-Strohl" target="_blank">Upendo Ventures</a></li>
+			<li>Erwin, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
+		</ul>
+	
+		<h3><strong>Release Note Prefixes</strong></h3>
+		<p>The following prefixes are defined as:</p>
+		<ul>
+			<li><strong>SI:</strong> Support Inquiry - This issue was reported by a <a href="https://upendoventures.com/Support" target="_blank">support customer</a> and, as such, was prioritized above all other tasks.</li>
+			<li><strong>CI:</strong> Community Inquiry - This issue was reported by a community member in the <a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues" target="_blanK">GitHub issues (or elsewhere)</a>.</li>
+		</ul>
 
-	<p>Version 01.00.00</p>
-	<ul>
-		<li>Initial release. Allows authorized end-users to manage pages more quickly.</li>
-	</ul>
+		<h3>Version 01.00.02</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>SI: Move to default sort orders instead of site hierarchy (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/24" target="_blank">Issue 24</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Support for searching in additional page fields (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/28" target="_blank">Issue 28</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Placeholder value added for empty fields (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/27">Issue 27</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>SI: Usability issues with the page index icon (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/32" target="_blank">Issue 32</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Searching doesn't reset the current page number to one (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/30">Issue 30</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Module listing doesn't scroll when listed off of the viewport (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/34">Issue 34</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Icons are missing tooltips for usability (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/33">Issue 33</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Module icon is not the correct icon for modules (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/35">Issue 34</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Button label disappears in some themes (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/23">Issue 23</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Permissions pop-up appears to be editable and shouldn't (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/26">Issue 26</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+			<li>SI: Sort only works for the current page (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/29">Issue 29</a>, thanks <a href="https://github.com/erw13n" target="_blank">@erw13n</a>!)</li>
+		</ul>
+
+		<h3>Version 01.00.01</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>None in this release</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>SI: Resolved a compatibility bug with 2sxc and Evoq, thanks <a href="https://github.com/sniravj" target="_blank">@sniravj</a>!)</li>
+			<li>SI: Improved web service error logging, thanks <a href="https://github.com/hismightiness" target="_blank">@hismightiness</a>!)</li>
+			<li>SI: Improved string handling for performance, thanks <a href="https://github.com/hismightiness" target="_blank">@hismightiness</a>!)</li>
+			<li>SI: Improved caching support for Microsoft Azure, thanks <a href="https://github.com/hismightiness" target="_blank">@hismightiness</a>!)</li>
+		</ul>
+
+		<h3>Version 01.00.00</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>Initial release. Allows authorized end-users to manage pages more quickly, thanks <a href="https://github.com/hismightiness" target="_blank">@hismightiness</a> &amp; <a href="https://github.com/sniravj" target="_blank">@sniravj</a>!)</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>None in this release</li>
+		</ul>
+
+	<div>
 </div>
