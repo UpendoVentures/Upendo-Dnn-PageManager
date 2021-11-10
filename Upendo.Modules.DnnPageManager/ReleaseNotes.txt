@@ -20,6 +20,7 @@
 			<li>Matt Rutledge, <a href="https://beleivekids.com/" target="_blank">Believe Kids</a></li>
 			<li>Adam Bernstein, <a href="https://practicewise.com/" target="_blank">PracticeWise</a></li>
 			<li>Aaron Lopez, <a href="https://wolfxmachina.com/" target="_blank">Wolf X Machina</a></li>
+			<li><a href="https://www.linkedin.com/in/scottkadera/" target="_blank">Scott Kadera</a>, <a href="https://www.fortlewis.edu/" target="_blank">Fort Lewis College</a></li>
 		</ul>
 	
 		<h3>Contributors</h3>
