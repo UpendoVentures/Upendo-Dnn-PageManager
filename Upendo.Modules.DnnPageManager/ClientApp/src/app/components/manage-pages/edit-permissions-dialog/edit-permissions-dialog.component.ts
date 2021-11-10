@@ -15,6 +15,7 @@ export class EditPermissionsDialogComponent implements OnInit {
 
   portalId: number;
   tabId: number;
+  isEditDisabled: boolean = true;
 
   @Select(PageState.userPermissions)
   userPermissions$: Observable<Array<UserModel>>;

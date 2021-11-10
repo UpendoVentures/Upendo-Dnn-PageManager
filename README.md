@@ -81,6 +81,24 @@ Steps 1 through 8 are considered to be more for set-up, while the remaining step
 12. Build in Debug mode will push the code updates into the `Website\DesktopModules` folder (for modules, and other areas for other extensions, such as `\Bin` for Libraries)  
 13. Build in Release mode will create the release packages in the `Install\ExtensionType` folder (e.g., Skins, Modules, Libraries, etc.)  
 
+### Working with Angular/ClientApp
+
+For working with Angular, it require to have ClientApp inside DesktopModules.
+
+1. Copy `ClientApp` folder under `Upendo.Modules.DnnPageManager` folder into `Website/DesktopModules/Upendo.Modules.DnnPageManager`
+2. Open `Website/DesktopModules/Upendo.Modules.DnnPageManager/ClientApp` with VS-Code
+3. Open `package.json`
+4. Under `scripts` section, add this line
+```
+"devwatch": "ng build --output-hashing none --watch"
+```
+5. Open Terminal and execute 
+```
+npm run devwatch
+```
+6. Now, whenever there's a change, it will rebuild a clean version of it.
+7. Refresh web browser to see the result. (Hard refresh to remove cache)
+
 ### Solution Folder Architecture  
 
 Here is an explanation of each of the top-level folders found in the solution. These folders are 

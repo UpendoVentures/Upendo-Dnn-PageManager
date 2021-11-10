@@ -14,9 +14,11 @@ td
    &.mat-cell
       font-size: 12px
       padding: 8px
-      cursor: pointer
+      /* cursor: pointer */
       color: #000000
-   
+   mat-checkbox
+      cursor: not-allowed
+
 mat-icon
    font-size: 18px
    width: 18px
@@ -44,6 +46,25 @@ h2
    background: #FFFFFF
    border-radius: 3px
    cursor: pointer
+
+.button
+   &:hover,
+   &:focus,
+   &:visited
+      color: #3f51b5!important
+      background: #f5f8fa!important
+
+.button
+   &:disabled,
+   &[disabled],
+   &:disabled:hover,
+   &:disabled:focus,
+   &:disabled:visited
+      border: 1px solid #999999 !important
+      background-color: rgba(0,0,0,.12) !important
+      color: #666666 !important
+      cursor: not-allowed !important
+      pointer-events: none
 
 a
    &:hover,

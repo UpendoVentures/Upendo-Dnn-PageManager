@@ -98,7 +98,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.getPages(false);
+      this.getPages(false, true);
     }, 1000);
 
     this.paginator.page
@@ -109,13 +109,17 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
-  getPages(showClearSearch: boolean): void {
+  getPages(showClearSearch: boolean, isInit: boolean = false): void {
     if (
       this.searchText.length > 0 ||
       (showClearSearch && this.searchText.length === 0)
     ) {
       localStorage.setItem('searchText', this.searchText);
+      this.paginator.pageIndex = 0;
     }
+
+    if (isInit)
+      this.paginator.pageIndex = 0;
 
     if (!!this.sort) {
       localStorage.setItem(
@@ -124,7 +128,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       localStorage.setItem(
         'sortBy',
-        !!this.sort?.active ? this.sort?.active : 'undefined'
+        !!this.sort?.active ? this.sort?.active : isInit ? 'name' : 'undefined'
       );
     }
 
@@ -138,7 +142,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
         new GetAllPages(
           portalId,
           !!searchValue ? searchValue : this.searchText,
-          this.paginator ? this.paginator.pageIndex : 0,
+          this.paginator ? !!searchValue || isInit ? 0 : this.paginator.pageIndex : 0,
           this.paginator ? this.paginator.pageSize : 10,
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction
@@ -161,7 +165,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sortData(): void {
-    this.getPages(this.searchText.length > 0);
+    this.getPages(this.searchText.length > 0, true);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean): number {
@@ -234,6 +238,10 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
         })
       )
       .subscribe();
+  }
+
+  isNullOrEmpty(data: string) {
+    return data ? data : 'no value';
   }
 
   clearSearch(): void {

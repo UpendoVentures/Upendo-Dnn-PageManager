@@ -1,4 +1,4 @@
-<div>
+<mat-dialog-content>
   <table mat-table [dataSource]="pageModules$">
     <ng-container matColumnDef="Title">
       <th mat-header-cell *matHeaderCellDef>Title</th>
@@ -17,7 +17,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedPageModuleColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedPageModuleColumns"></tr>
   </table>
-</div>
+</mat-dialog-content>
 
 <div mat-dialog-actions class="dialog-action">
   <a class="button" mat-flat-button (click)="cancel()" disableRipple>

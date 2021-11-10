@@ -12,12 +12,17 @@ td
    &.mat-cell
       font-size: 12px
       padding: 8px
-      cursor: pointer
+      //cursor: pointer
       color: #000000
 
    &:first-child,
    &:nth-child(2)
       white-space: nowrap
+   
+span.dblclick,
+td.dblclick span
+      border-bottom: dashed 1px #c1c3cd
+      cursor: pointer
 
 tr:not(.mat-header-row):hover
    background-color: #f3f3f3
@@ -28,12 +33,15 @@ mat-icon
    height: 17px
    vertical-align: middle
    cursor: pointer
+   &.c-default
+      cursor: default
 
 .link-icon
    margin-right: 7px
 
 .search-bar
-   text-align: right
+   display: flex
+   justify-content: space-between
    margin-bottom: 10px
    mat-form-field
       width: 400px
