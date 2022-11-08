@@ -1,6 +1,6 @@
 ﻿<dotnetnuke type="Package" version="5.0">
 	<packages>
-		<package name="Upendo.Modules.DnnPageManager" type="Module" version="01.00.03">
+		<package name="Upendo.Modules.DnnPageManager" type="Module" version="01.02.00">
 			<friendlyName>Upendo DNN PageManager</friendlyName>
 			<description>
 				This is a page management module meant to help make managing pages in DNN easier for all end-users, built by Upendo Ventures.
@@ -54,7 +54,7 @@
 						<attributes>
 							<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
 							<desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>01.00.00,01.00.01,01.00.02</upgradeVersionsList>
+              <upgradeVersionsList>01.00.00,01.00.01,01.00.02,01.02.00</upgradeVersionsList>
 						</attributes>
 					</eventMessage>
 				</component>
@@ -62,7 +62,7 @@
 					<assemblies>
 						<assembly>
 							<name>Upendo.Modules.DnnPageManager.dll</name>
-							<version>01.00.02</version>
+							<version>01.02.00</version>
 							<path>bin</path>
 						</assembly>
 						<assembly>
@@ -79,6 +79,26 @@
 							<name>Resources.zip</name>
 						</resourceFile>
 					</resourceFiles>
+				</component>
+				<component type="Cleanup" version="01.02.00">
+					<files>
+						<file>
+							<path>dist</path>
+							<name>main.js</name>
+						</file>
+						<file>
+							<path>dist</path>
+							<name>runtime.js</name>
+						</file>
+						<file>
+							<path>dist</path>
+							<name>polyfills.js</name>
+						</file>
+						<file>
+							<path>dist</path>
+							<name>styles.css</name>
+						</file>
+					</files>
 				</component>
 			</components>
 		</package>
