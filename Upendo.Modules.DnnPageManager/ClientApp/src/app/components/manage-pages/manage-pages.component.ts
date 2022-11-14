@@ -68,7 +68,15 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   sortActive: string;
   sortDirection: SortDirection;
-
+  goToPage!: number;
+  updateGoToPage() {
+    this.paginator.pageIndex = this.goToPage - 1;
+    this.paginator.page.next({
+      pageIndex: this.goToPage,
+      pageSize: this.paginator.pageSize,
+      length: this.paginator.length,
+    });
+  }
   constructor(
     private context: Context,
     private dialog: MatDialog,

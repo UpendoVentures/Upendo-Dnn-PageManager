@@ -130,6 +130,7 @@
     <None Include="Upendo.Modules.DnnPageManager.dnn" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="01.02.00.txt" />
     <Content Include="Images\PageManager.png" />
     <Content Include="index.html" />
     <Content Include="License.txt" />
