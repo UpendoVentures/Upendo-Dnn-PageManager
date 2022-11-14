@@ -118,7 +118,7 @@
       <div style="display: flex; align-items: baseline">
         <div style="margin-right: 8px">Go to page:</div>
         <mat-form-field appearance="legacy" style="width: 5vw">
-          <input
+          <input type="number"
             matInput
             [(ngModel)]="goToPage"
             (keydown.enter)="updateGoToPage()"
