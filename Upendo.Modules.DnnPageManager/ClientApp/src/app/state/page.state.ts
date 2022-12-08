@@ -14,6 +14,7 @@ import {
   GetPermissions,
   SetDefaultState,
   GetPageModules,
+  GetAllPagesWithoutSEO,
 } from './page.actions';
 import {
   PageModel,
@@ -31,6 +32,7 @@ export interface PageStateModel {
   urls: Array<PageUrlModel>;
   permissions: PermissionsModel;
   total: number;
+  isWithoutSEO: boolean;
   updated: boolean;
   modules: Array<PageModuleModel>;
 }
@@ -40,6 +42,7 @@ export interface PageStateModel {
   defaults: {
     isLoading: false,
     total: 0,
+    isWithoutSEO: false,
     pages: [],
     urls: [],
     permissions: {
@@ -67,6 +70,11 @@ export class PageState {
   @Selector()
   static total(state: PageStateModel): number {
     return state?.total;
+  }
+
+  @Selector()
+  static totalWithoutSEO(state: PageStateModel): boolean {
+    return state?.isWithoutSEO;
   }
 
   @Selector()
@@ -113,7 +121,8 @@ export class PageState {
         action.pageIndex,
         action.pageSize,
         action.sortBy,
-        action.sortType
+        action.sortType,
+        action.filterMetadata
       )
       .pipe(
         tap((x) => {
@@ -121,6 +130,34 @@ export class PageState {
             total: x.Total,
             pages: x.result,
             isLoading: false,
+          });
+        })
+      );
+  }
+
+  @Action(GetAllPagesWithoutSEO, { cancelUncompleted: true })
+  getAllPagesWithoutSEO(
+    { patchState }: StateContext<PageStateModel>,
+    action: GetAllPages
+  ): Observable<any> {
+    patchState({ isLoading: true });
+
+    return this.pageService
+      .getPages(
+        action.portalId,
+        action.searchKey,
+        action.pageIndex,
+        action.pageSize,
+        action.sortBy,
+        action.sortType,
+        action.filterMetadata
+      )
+      .pipe(
+        tap((x) => {
+          console.log(x.Total > 0);
+          console.log(x);
+          patchState({
+            isWithoutSEO: x.Total > 0,            
           });
         })
       );
