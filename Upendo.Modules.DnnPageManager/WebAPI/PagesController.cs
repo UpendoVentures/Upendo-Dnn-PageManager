@@ -31,7 +31,9 @@ namespace Upendo.Modules.DnnPageManager.Controller
     public class PagesController : DnnApiController
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
-
+        public const string MODSETTING_Title = "Title";
+        public const string MODSETTING_Description = "Description";
+        public const string MODSETTING_Keywords = "Keywords";
         public PagesController() 
         {
         }
@@ -40,7 +42,8 @@ namespace Upendo.Modules.DnnPageManager.Controller
         [ValidateAntiForgeryToken]
         [DnnAuthorize]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
-        public HttpResponseMessage GetPagesList(int portalId, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "", string sortType = "", bool? deleted = false)
+        public HttpResponseMessage GetPagesList(int portalId, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "",
+                                                string sortType = "", bool? deleted = false, bool? filterMetadata = false)
         {
             int total = 0;
 
@@ -52,7 +55,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 }
 
                 PagesControllerImpl pageController = new PagesControllerImpl();
-
+                
                 var pages = pageController.GetPagesList(portalId: portalId,
                                                          total: out total,
                                                          searchKey: searchKey,
@@ -61,7 +64,25 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                                          sortBy: sortBy,
                                                          sortType: sortType,
                                                          deleted: deleted
-                                                        );
+                                                         );
+                if (filterMetadata.HasValue)
+                {
+                    if (filterMetadata.Value)
+                    {
+                        if (ActiveModule.ModuleSettings[MODSETTING_Title].ToString().Equals("true"))
+                        {
+                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
+                        }
+                        if (ActiveModule.ModuleSettings[MODSETTING_Description].ToString().Equals("true"))
+                        {
+                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
+                        }
+                        if (ActiveModule.ModuleSettings[MODSETTING_Keywords].ToString().Equals("true"))
+                        {
+                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
+                        }
+                    }
+                }
 
                 var result = pages.Select(p => new
                 {
@@ -98,7 +119,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 //    }
                 //}
 
-                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = total.ToString(), result });
+                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = result.Count().ToString(), result });
             }
             catch (Exception ex)
             {
