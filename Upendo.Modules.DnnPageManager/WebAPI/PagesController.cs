@@ -45,6 +45,17 @@ namespace Upendo.Modules.DnnPageManager.Controller
         public HttpResponseMessage GetPagesList(int portalId, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "",
                                                 string sortType = "", bool? deleted = false, bool? filterMetadata = false)
         {
+            //Method to generate the Settings_Names on the first load
+            if (ActiveModule.ModuleSettings.Count <= 1)
+            {
+                var settings = new SettingsViewModel();
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Title, "false".ToString());
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Description, "false");
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Keywords, "false");
+                settings.Title = "false";
+                settings.Description = "false";
+                settings.Keywords = "false";
+            }
             int total = 0;
 
             try
@@ -65,7 +76,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                                          sortType: sortType,
                                                          deleted: deleted
                                                          );
-                if (filterMetadata.HasValue)
+                if (filterMetadata.HasValue && ActiveModule.ModuleSettings.Count > 1)
                 {
                     if (filterMetadata.Value)
                     {
