@@ -4,7 +4,7 @@ common.Utils = function () {
 
     var get = function (httpMethod, action, service, params, success, fail, always) {
         var jqxhr = $.ajax({
-            url: "http://localhost.dnnpagemanager/DesktopModules/Upendo.Modules.DnnPageManager/API/Settings" + "/" + action,
+            url: service.baseUrl + service.controller + "/" + action,
             beforeSend: service.framework.setModuleHeaders,
             type: httpMethod,
             async: true,
