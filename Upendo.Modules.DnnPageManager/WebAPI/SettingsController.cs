@@ -21,17 +21,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
         public HttpResponseMessage LoadSettings()
         {
             var settings = new SettingsViewModel();
-            //Method to generate the Settings_Names on the first load
-            if (ActiveModule.ModuleSettings.Count <= 1)
-            {
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Title, "false".ToString());
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Description, "false");
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Keywords, "false");
-                settings.Title = "false";
-                settings.Description = "false";
-                settings.Keywords = "false";
-            }
-
+           
             if (ActiveModule.ModuleSettings.ContainsKey(MODSETTING_Title))
             {
                 settings.Title = ActiveModule.ModuleSettings[MODSETTING_Title].ToString();
