@@ -39,11 +39,14 @@
 		<h3>Version 01.01.00</h3>
 		<h4>Enhancements</h4>
 		<ul>
-			<li>SI:  (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/" target="_blank">Issue </a>, thanks <a href="https://github.com/" target="_blank">@</a>!)</li>
+			<li>SI: Updated Angular to v13.3.11 (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/83" target="_blank">Issue 83</a>, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
+			<li>SI: Filter Pages by Missing Metadata (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/31" target="_blank">Issue 31</a>, thanks <a href="https://github.com/jldelatorre" target="_blank">@jldelatorre</a> &amp; <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>SI: Added More Flexible Paging for Larger Websites (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/25" target="_blank">Issue 25</a>, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
 		</ul>
 		<h4>Maintenence &amp Bug Fixes</h4>
 		<ul>
-			<li>SI:  (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/" target="_blank">Issue </a>, thanks <a href="https://github.com/" target="_blank">@</a>!)</li>
+			<li>Updated several build dependencies to resolve automated security reports, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
+			<li>Updated string handling in earlier PRs, thanks <a href="https://github.com/WillStrohl" target="_blank">@WillStrohl</a>!)</li>
 		</ul>
 
 		<h3>Version 01.00.02</h3>
