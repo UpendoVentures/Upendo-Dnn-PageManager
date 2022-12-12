@@ -7,6 +7,7 @@
 	<h2>Page Manager Module for DNN</h2>
 	<hr />
 	<div class="dnnClear">
+		<h1 style="color:red;font-weight:bold;font-size:40pt;">DO NOT RELEASE UNTIL THE RELEASE NOTES ARE DONE!!!</h1>
 
 		<p class="muy-importante">The release notes continue after the Sponsors and Contributors below.</p>
 	
@@ -19,8 +20,6 @@
 			<li>Dan Rice, <a href="https://www.puresystems.co.uk/" target="_blank">Pure Systems</a></li>
 			<li>Matt Rutledge, <a href="https://beleivekids.com/" target="_blank">Believe Kids</a></li>
 			<li>Adam Bernstein, <a href="https://practicewise.com/" target="_blank">PracticeWise</a></li>
-			<li>Aaron Lopez, <a href="https://wolfxmachina.com/" target="_blank">Wolf X Machina</a></li>
-			<li><a href="https://www.linkedin.com/in/scottkadera/" target="_blank">Scott Kadera</a>, <a href="https://www.fortlewis.edu/" target="_blank">Fort Lewis College</a></li>
 		</ul>
 	
 		<h3>Contributors</h3>
@@ -35,6 +34,16 @@
 		<ul>
 			<li><strong>SI:</strong> Support Inquiry - This issue was reported by a <a href="https://upendoventures.com/Support" target="_blank">support customer</a> and, as such, was prioritized above all other tasks.</li>
 			<li><strong>CI:</strong> Community Inquiry - This issue was reported by a community member in the <a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues" target="_blanK">GitHub issues (or elsewhere)</a>.</li>
+		</ul>
+
+		<h3>Version 01.01.00</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>SI:  (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/" target="_blank">Issue </a>, thanks <a href="https://github.com/" target="_blank">@</a>!)</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>SI:  (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/" target="_blank">Issue </a>, thanks <a href="https://github.com/" target="_blank">@</a>!)</li>
 		</ul>
 
 		<h3>Version 01.00.02</h3>
