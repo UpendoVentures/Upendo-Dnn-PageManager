@@ -21,9 +21,10 @@ export class PageService {
     pageIndex: number,
     pageSize: number,
     sortBy: string,
-    sortType: string
+    sortType: string,
+    filterMetadata: boolean
   ): Observable<any> {
-    const apiUrl = `Pages/GetPagesList?portalId=${portalId}&searchKey=${searchKey}&pageIndex=${pageIndex}&pageSize=${pageSize}&sortBy=${sortBy}&sortType=${sortType}`;
+    const apiUrl = `Pages/GetPagesList?portalId=${portalId}&searchKey=${searchKey}&pageIndex=${pageIndex}&pageSize=${pageSize}&sortBy=${sortBy}&sortType=${sortType}&filterMetadata=${filterMetadata}`;
 
     return this.http.get(this._routingWebAPI + apiUrl).pipe(take(1));
   }

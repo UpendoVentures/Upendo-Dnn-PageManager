@@ -10,6 +10,13 @@
     </button>
   </mat-form-field>
 </div>
+<div class="filterButton" *ngIf="(isWithoutSEO$ | async)">
+  <label>Filter Missing Metadata  </label>
+  <label class="switch">
+    <input type="checkbox"  (click)="filterByMetadata()" [(ngModel)]="filterMetadata">
+    <span class="slider round"></span>
+  </label>
+</div>
 <div>
   <table *ngIf="!(isLoading$ | async)" mat-table [dataSource]="dataSource$" matSort (matSortChange)="sortData()"
     [matSortActive]="sortActive" [matSortDirection]="sortDirection">

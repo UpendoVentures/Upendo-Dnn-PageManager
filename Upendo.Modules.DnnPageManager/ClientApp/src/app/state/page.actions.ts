@@ -7,7 +7,22 @@ export class GetAllPages {
     public pageIndex: number,
     public pageSize: number,
     public sortBy: string,
-    public sortType: string
+    public sortType: string,
+    public filterMetadata: boolean
+  ) {}
+}
+
+export class GetAllPagesWithoutSEO {
+  static readonly type = '[USER] Get All Pages Without SEO';
+
+  constructor(
+    public portalId: number,
+    public searchKey: string,
+    public pageIndex: number,
+    public pageSize: number,
+    public sortBy: string,
+    public sortType: string,
+    public filterMetadata: boolean
   ) {}
 }
 
