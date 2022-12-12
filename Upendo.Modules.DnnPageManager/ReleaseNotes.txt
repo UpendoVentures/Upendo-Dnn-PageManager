@@ -7,8 +7,6 @@
 	<h2>Page Manager Module for DNN</h2>
 	<hr />
 	<div class="dnnClear">
-		<h1 style="color:red;font-weight:bold;font-size:40pt;">DO NOT RELEASE UNTIL THE RELEASE NOTES ARE DONE!!!</h1>
-
 		<p class="muy-importante">The release notes continue after the Sponsors and Contributors below.</p>
 	
 		<h3>Sponsors</h3>
