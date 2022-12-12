@@ -44,6 +44,16 @@
 										<helpUrl />
 										<supportsPopUps>True</supportsPopUps>
 									</moduleControl>
+									<moduleControl>
+										<controlKey>QuickSettings</controlKey>
+										<controlSrc>DesktopModules/Upendo.Modules.DnnPageManager/Settings.html</controlSrc>
+										<supportsPartialRendering>False</supportsPartialRendering>
+										<controlTitle>DnnSpaModule Settings</controlTitle>
+										<controlType>Edit</controlType>
+										<iconFile />
+										<helpUrl />
+										<viewOrder>0</viewOrder>
+									</moduleControl>
 								</moduleControls>
 							</moduleDefinition>
 						</moduleDefinitions>
