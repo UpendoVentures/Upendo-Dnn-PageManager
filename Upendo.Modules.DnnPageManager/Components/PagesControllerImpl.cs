@@ -49,7 +49,8 @@ namespace Upendo.Modules.DnnPageManager.Components
             Mapper = config.CreateMapper();
         }
 
-        public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "", string sortType = "", bool? deleted = false)
+        public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10,
+                                            string sortBy = "", string sortType = "", bool? deleted = false)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                 bool includeDeleted = true;
                 bool includeSubpages = true;
                 bool? visible = null;
-
+                
                 var tabs = TabController.GetPortalTabs(portalSettings.PortalId, adminTabId, false, includeHidden, includeDeleted, true);
                 var pages = from t in tabs
                             where (t.ParentId != adminTabId || t.ParentId == Null.NullInteger) &&

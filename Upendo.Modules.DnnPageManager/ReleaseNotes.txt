@@ -7,7 +7,6 @@
 	<h2>Page Manager Module for DNN</h2>
 	<hr />
 	<div class="dnnClear">
-
 		<p class="muy-importante">The release notes continue after the Sponsors and Contributors below.</p>
 	
 		<h3>Sponsors</h3>
@@ -19,15 +18,15 @@
 			<li>Dan Rice, <a href="https://www.puresystems.co.uk/" target="_blank">Pure Systems</a></li>
 			<li>Matt Rutledge, <a href="https://beleivekids.com/" target="_blank">Believe Kids</a></li>
 			<li>Adam Bernstein, <a href="https://practicewise.com/" target="_blank">PracticeWise</a></li>
-			<li>Aaron Lopez, <a href="https://wolfxmachina.com/" target="_blank">Wolf X Machina</a></li>
-			<li><a href="https://www.linkedin.com/in/scottkadera/" target="_blank">Scott Kadera</a>, <a href="https://www.fortlewis.edu/" target="_blank">Fort Lewis College</a></li>
 		</ul>
 	
 		<h3>Contributors</h3>
 		<p>THANK YOU to the following community members for participating in this release!</p>
 		<ul>
 			<li>Will Strohl, <a href="https://upendoventures.com/How/People/Will-Strohl" target="_blank">Upendo Ventures</a></li>
-			<li>Erwin, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
+			<li>Ariel Blanco, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
+			<li>Vicente Almea, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
+			<li>Jorge De La Torre, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
 		</ul>
 	
 		<h3><strong>Release Note Prefixes</strong></h3>
@@ -35,6 +34,19 @@
 		<ul>
 			<li><strong>SI:</strong> Support Inquiry - This issue was reported by a <a href="https://upendoventures.com/Support" target="_blank">support customer</a> and, as such, was prioritized above all other tasks.</li>
 			<li><strong>CI:</strong> Community Inquiry - This issue was reported by a community member in the <a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues" target="_blanK">GitHub issues (or elsewhere)</a>.</li>
+		</ul>
+
+		<h3>Version 01.01.00</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>SI: Updated Angular to v13.3.11 (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/83" target="_blank">Issue 83</a>, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
+			<li>SI: Filter Pages by Missing Metadata (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/31" target="_blank">Issue 31</a>, thanks <a href="https://github.com/jldelatorre" target="_blank">@jldelatorre</a> &amp; <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>SI: Added More Flexible Paging for Larger Websites (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/25" target="_blank">Issue 25</a>, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>Updated several build dependencies to resolve automated security reports, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
+			<li>Updated string handling in earlier PRs, thanks <a href="https://github.com/WillStrohl" target="_blank">@WillStrohl</a>!)</li>
 		</ul>
 
 		<h3>Version 01.00.02</h3>

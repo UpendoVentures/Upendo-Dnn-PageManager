@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <dotnetnuke type="Package" version="6.0">
   <packages>
-    <package name="Upendo.Modules.DnnPageManager_Symbols" type="Library" version="01.00.02">
+    <package name="Upendo.Modules.DnnPageManager_Symbols" type="Library" version="01.01.00">
       <friendlyName>Upendo DNN PageManager Symbols</friendlyName>
       <description>
         This is a page management module meant to help make managing pages in DNN easier for all end-users, built by Upendo Ventures.
@@ -17,7 +17,7 @@
       <releaseNotes src="ReleaseNotes.txt" />
       <azureCompatible>True</azureCompatible>
       <dependencies>
-        <dependency type="managedPackage" version="1.0.2">Upendo.Modules.DnnPageManager</dependency>
+        <dependency type="managedPackage" version="1.1.0">Upendo.Modules.DnnPageManager</dependency>
       </dependencies>
       <components>
         <component type="ResourceFile">

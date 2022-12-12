@@ -20,6 +20,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DotNetNuke.Common.Utilities;
+using DotNetNuke.Entities.Modules;
 using DotNetNuke.Instrumentation;
 using Upendo.Modules.DnnPageManager.Common;
 using Upendo.Modules.DnnPageManager.Components;
@@ -40,8 +41,21 @@ namespace Upendo.Modules.DnnPageManager.Controller
         [ValidateAntiForgeryToken]
         [DnnAuthorize]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
-        public HttpResponseMessage GetPagesList(int portalId, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "", string sortType = "", bool? deleted = false)
+        public HttpResponseMessage GetPagesList(int portalId, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "",
+                                                string sortType = "", bool? deleted = false, bool? filterMetadata = false)
         {
+            //Method to generate the Settings_Names on the first load
+            if (ActiveModule.ModuleSettings.Count <= 1)
+            {
+                var settings = new SettingsViewModel();
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Title, Constants.QuickSettings.MODSETTING_DefaultFalse);
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Description, Constants.QuickSettings.MODSETTING_DefaultFalse);
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Keywords, Constants.QuickSettings.MODSETTING_DefaultFalse);
+
+                settings.Title = Constants.QuickSettings.MODSETTING_DefaultFalse;
+                settings.Description = Constants.QuickSettings.MODSETTING_DefaultFalse;
+                settings.Keywords = Constants.QuickSettings.MODSETTING_DefaultFalse;
+            }
             int total = 0;
 
             try
@@ -52,7 +66,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 }
 
                 PagesControllerImpl pageController = new PagesControllerImpl();
-
+                
                 var pages = pageController.GetPagesList(portalId: portalId,
                                                          total: out total,
                                                          searchKey: searchKey,
@@ -61,7 +75,25 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                                          sortBy: sortBy,
                                                          sortType: sortType,
                                                          deleted: deleted
-                                                        );
+                                                         );
+                if (filterMetadata.HasValue && ActiveModule.ModuleSettings.Count > 1)
+                {
+                    if (filterMetadata.Value)
+                    {
+                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Title].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
+                        {
+                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
+                        }
+                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Description].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
+                        {
+                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
+                        }
+                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Keywords].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
+                        {
+                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
+                        }
+                    }
+                }
 
                 var result = pages.Select(p => new
                 {
@@ -80,25 +112,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     HasBeenPublished = p.HasBeenPublished
                 });
 
-                //string sortOn = sortBy.ToLowerInvariant();
-                //string sortOrder = sortType.ToLowerInvariant();
-
-                //if (String.IsNullOrEmpty(sortBy) == false)
-                //{
-                //    switch (sortBy.ToLowerInvariant())
-                //    {
-                //        case Constants.NAME:
-                //            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Name) : result.OrderByDescending(x => x.Name);
-                //            break;
-                //        case Constants.TITLE:
-                //            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Title) : result.OrderByDescending(x => x.Title);
-                //            break;
-                //        default:
-                //            break;
-                //    }
-                //}
-
-                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = total.ToString(), result });
+                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = result.Count().ToString(), result });
             }
             catch (Exception ex)
             {
