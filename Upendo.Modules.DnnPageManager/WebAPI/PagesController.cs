@@ -20,6 +20,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DotNetNuke.Common.Utilities;
+using DotNetNuke.Entities.Modules;
 using DotNetNuke.Instrumentation;
 using Upendo.Modules.DnnPageManager.Common;
 using Upendo.Modules.DnnPageManager.Components;
@@ -31,9 +32,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
     public class PagesController : DnnApiController
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
-        public const string MODSETTING_Title = "Title";
-        public const string MODSETTING_Description = "Description";
-        public const string MODSETTING_Keywords = "Keywords";
+
         public PagesController() 
         {
         }
@@ -49,12 +48,13 @@ namespace Upendo.Modules.DnnPageManager.Controller
             if (ActiveModule.ModuleSettings.Count <= 1)
             {
                 var settings = new SettingsViewModel();
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Title, "false".ToString());
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Description, "false");
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, MODSETTING_Keywords, "false");
-                settings.Title = "false";
-                settings.Description = "false";
-                settings.Keywords = "false";
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Title, Constants.QuickSettings.MODSETTING_DefaultFalse);
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Description, Constants.QuickSettings.MODSETTING_DefaultFalse);
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Keywords, Constants.QuickSettings.MODSETTING_DefaultFalse);
+
+                settings.Title = Constants.QuickSettings.MODSETTING_DefaultFalse;
+                settings.Description = Constants.QuickSettings.MODSETTING_DefaultFalse;
+                settings.Keywords = Constants.QuickSettings.MODSETTING_DefaultFalse;
             }
             int total = 0;
 
@@ -80,15 +80,15 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 {
                     if (filterMetadata.Value)
                     {
-                        if (ActiveModule.ModuleSettings[MODSETTING_Title].ToString().Equals("true"))
+                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Title].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
                         {
                             pages = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
                         }
-                        if (ActiveModule.ModuleSettings[MODSETTING_Description].ToString().Equals("true"))
+                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Description].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
                         {
                             pages = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
                         }
-                        if (ActiveModule.ModuleSettings[MODSETTING_Keywords].ToString().Equals("true"))
+                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Keywords].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
                         {
                             pages = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
                         }
@@ -111,24 +111,6 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     IsIndexed = p.Indexed,
                     HasBeenPublished = p.HasBeenPublished
                 });
-
-                //string sortOn = sortBy.ToLowerInvariant();
-                //string sortOrder = sortType.ToLowerInvariant();
-
-                //if (String.IsNullOrEmpty(sortBy) == false)
-                //{
-                //    switch (sortBy.ToLowerInvariant())
-                //    {
-                //        case Constants.NAME:
-                //            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Name) : result.OrderByDescending(x => x.Name);
-                //            break;
-                //        case Constants.TITLE:
-                //            result = sortOrder == Constants.ASC ? result.OrderBy(x => x.Title) : result.OrderByDescending(x => x.Title);
-                //            break;
-                //        default:
-                //            break;
-                //    }
-                //}
 
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = result.Count().ToString(), result });
             }

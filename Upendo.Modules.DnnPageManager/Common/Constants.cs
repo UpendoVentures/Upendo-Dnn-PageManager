@@ -82,6 +82,16 @@ namespace Upendo.Modules.DnnPageManager.Common
             public static string PHYSICAL_FILE_FORMAT = "{0}/{1}/{2}";
             public static string RELATIVE_FILE_FORMAT = "/{0}/{1}/{2}/{3}";
         }
+
+        public static class QuickSettings
+        {
+            public const string MODSETTING_Title = "Title";
+            public const string MODSETTING_Description = "Description";
+            public const string MODSETTING_Keywords = "Keywords";
+            public const string MODSETTING_DefaultFalse = "false";
+            public const string MODSETTING_DefaultTrue = "true";
+            public const string MODSETTING_Success = "success";
+        }
     }
 
     public enum PublishStatus
