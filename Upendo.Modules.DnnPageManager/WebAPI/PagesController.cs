@@ -26,6 +26,7 @@ using Upendo.Modules.DnnPageManager.Common;
 using Upendo.Modules.DnnPageManager.Components;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
+using System.Collections.Generic;
 
 namespace Upendo.Modules.DnnPageManager.Controller
 {
@@ -48,12 +49,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
             if (ActiveModule.ModuleSettings.Count <= 1)
             {
                 var settings = new SettingsViewModel();
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Title, Constants.QuickSettings.MODSETTING_DefaultFalse);
-                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Description, Constants.QuickSettings.MODSETTING_DefaultFalse);
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Title, Constants.QuickSettings.MODSETTING_DefaultTrue);
+                ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Description, Constants.QuickSettings.MODSETTING_DefaultTrue);
                 ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, Constants.QuickSettings.MODSETTING_Keywords, Constants.QuickSettings.MODSETTING_DefaultFalse);
 
-                settings.Title = Constants.QuickSettings.MODSETTING_DefaultFalse;
-                settings.Description = Constants.QuickSettings.MODSETTING_DefaultFalse;
+                settings.Title = Constants.QuickSettings.MODSETTING_DefaultTrue;
+                settings.Description = Constants.QuickSettings.MODSETTING_DefaultTrue;
                 settings.Keywords = Constants.QuickSettings.MODSETTING_DefaultFalse;
             }
             int total = 0;
@@ -76,26 +77,64 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                                          sortType: sortType,
                                                          deleted: deleted
                                                          );
+                var pagesMissingMetadata = new List<Model.Page>();
                 if (filterMetadata.HasValue && ActiveModule.ModuleSettings.Count > 1)
                 {
                     if (filterMetadata.Value)
                     {
                         if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Title].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
                         {
-                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
+                            var filterTitle = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
+                            foreach (var item in filterTitle)
+                            {
+                                if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
+                                {
+                                    pagesMissingMetadata.Add(item);
+                                }
+                            }
                         }
                         if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Description].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
                         {
-                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
+                            var filterDescription = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
+                            foreach (var item in filterDescription)
+                            {
+                                if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
+                                {
+                                    pagesMissingMetadata.Add(item);
+                                }
+                            }
+
                         }
                         if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Keywords].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
                         {
-                            pages = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
+                            var filterKeyWords = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
+                            foreach (var item in filterKeyWords)
+                            {
+                                if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
+                                {
+                                    pagesMissingMetadata.Add(item);
+                                }
+                            }
                         }
                     }
                 }
 
-                var result = pages.Select(p => new
+                var result = filterMetadata.Value ? pagesMissingMetadata.OrderBy(s => s.LocalizedTabName).Select(p => new
+                {
+                    Id = p.TabID,
+                    Name = p.LocalizedTabName,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Keywords = p.KeyWords,
+                    Priority = p.SiteMapPriority,
+                    PrimaryUrl = pageController.GetPageUrls(p.PortalID, p.TabID).FirstOrDefault().Path,
+                    LastUpdated = string.Format(Constants.FORMAT_LASTUPDATED, (p.LastModifiedByUserID == Null.NullInteger ? Constants.SYSTEM : p.LastModifiedByUser(portalId).FirstName), (p.LastModifiedByUserID == Null.NullInteger ? Constants.ACCOUNT : p.LastModifiedByUser(portalId).LastName), p.LastModifiedOnDate.ToString(Constants.FORMAT_DATE)),
+                    IsVisible = p.IsVisible,
+                    IsAllowedSearch = p.AllowIndex,
+                    IsDisabled = p.DisableLink,
+                    IsIndexed = p.Indexed,
+                    HasBeenPublished = p.HasBeenPublished
+                }) : pages.OrderBy(s => s.LocalizedTabName).Select(p => new
                 {
                     Id = p.TabID,
                     Name = p.LocalizedTabName,
