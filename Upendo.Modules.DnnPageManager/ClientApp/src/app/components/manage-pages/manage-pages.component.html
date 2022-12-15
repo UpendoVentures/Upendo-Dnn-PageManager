@@ -10,7 +10,8 @@
     </button>
   </mat-form-field>
 </div>
-<div class="filterButton" *ngIf="(isWithoutSEO$ | async)">
+<div *ngIf="filterMetadata" class="alert alert-warning alert-panel">There are {{total$ | async}} pages missing critical SEO details.</div>
+  <div class="filterButton"  *ngIf="(isWithoutSEO$ | async)">
   <label>Filter Missing Metadata  </label>
   <label class="switch">
     <input type="checkbox"  (click)="filterByMetadata()" [(ngModel)]="filterMetadata">
