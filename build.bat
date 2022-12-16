@@ -1,1 +1,1 @@
-build.vs2017.Enterprise.bat
+build.vs2022.Community.bat
