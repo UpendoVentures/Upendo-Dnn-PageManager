@@ -36,6 +36,17 @@
 			<li><strong>CI:</strong> Community Inquiry - This issue was reported by a community member in the <a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues" target="_blanK">GitHub issues (or elsewhere)</a>.</li>
 		</ul>
 
+		<h3>Version 01.01.01</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>None at this time.</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>Added missing UI elements from the previous release, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>Fixed Visual Studio build issues, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+		</ul>
+
 		<h3>Version 01.01.00</h3>
 		<h4>Enhancements</h4>
 		<ul>

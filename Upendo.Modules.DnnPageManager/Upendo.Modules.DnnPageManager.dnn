@@ -1,6 +1,6 @@
 ﻿<dotnetnuke type="Package" version="5.0">
 	<packages>
-		<package name="Upendo.Modules.DnnPageManager" type="Module" version="01.01.00">
+		<package name="Upendo.Modules.DnnPageManager" type="Module" version="01.01.01">
 			<friendlyName>Upendo DNN PageManager</friendlyName>
 			<description>
 				This is a page management module meant to help make managing pages in DNN easier for all end-users, built by Upendo Ventures.
@@ -64,7 +64,7 @@
 						<attributes>
 							<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
 							<desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>01.00.00,01.00.01,01.00.02,01.01.00</upgradeVersionsList>
+              <upgradeVersionsList>01.00.00,01.00.01,01.00.02,01.01.01</upgradeVersionsList>
 						</attributes>
 					</eventMessage>
 				</component>
@@ -72,7 +72,7 @@
 					<assemblies>
 						<assembly>
 							<name>Upendo.Modules.DnnPageManager.dll</name>
-							<version>01.01.00</version>
+							<version>01.01.01</version>
 							<path>bin</path>
 						</assembly>
 						<assembly>
