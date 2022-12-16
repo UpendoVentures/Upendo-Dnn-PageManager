@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "dev": "ng build --output-hashing none",
     "devwatch": "ng build --output-hashing none --watch",
+    "production": "ng build --output-hashing none --configuration production",
     "test": "ng test"
   },
   "private": true,
