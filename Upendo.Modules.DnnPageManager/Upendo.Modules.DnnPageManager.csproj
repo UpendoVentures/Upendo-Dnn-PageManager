@@ -143,11 +143,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Module.Build" />
-  <!--PropertyGroup>
+  <PropertyGroup>
     <PreBuildEvent>
       cd $(ProjectDir)ClientApp
-      npm run build
-      ng build REPLACEWITHTWOHYPHENSoutput-hashing none
+      <!-- npm run build
+      ng build REPLACEWITHTWOHYPHENSoutput-hashing none -->
+      ng build --output-hashing none --configuration production 
     </PreBuildEvent>
-  </PropertyGroup-->
+  </PropertyGroup>
 </Project>
