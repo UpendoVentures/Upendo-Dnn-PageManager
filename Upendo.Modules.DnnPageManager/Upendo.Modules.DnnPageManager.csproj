@@ -146,8 +146,8 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <PreBuildEvent>
       cd $(ProjectDir)ClientApp
-      <!-- npm run build
-      ng build REPLACEWITHTWOHYPHENSoutput-hashing none -->
+      npm install
+      ng build
       ng build --output-hashing none --configuration production 
     </PreBuildEvent>
   </PropertyGroup>
