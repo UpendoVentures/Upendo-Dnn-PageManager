@@ -143,13 +143,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Module.Build" />
-   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <PreBuildEvent Condition=" !Exists('$(ProjectDir)ClientApp\node_modules') " >
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <PreBuildEvent>
       cd $(ProjectDir)ClientApp
-      npm install
-    </PreBuildEvent>
-    <PreBuildEvent Condition=" Exists('$(ProjectDir)ClientApp\node_modules') ">
-      cd $(ProjectDir)ClientApp
+      <!-- npm run build
+      ng build REPLACEWITHTWOHYPHENSoutput-hashing none -->
       ng build --output-hashing none --configuration production 
     </PreBuildEvent>
   </PropertyGroup>
