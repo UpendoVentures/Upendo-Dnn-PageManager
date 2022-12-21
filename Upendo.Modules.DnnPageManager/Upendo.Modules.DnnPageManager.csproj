@@ -143,16 +143,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Module.Build" />
-   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <PreBuildEvent>
-      cd $(ProjectDir)ClientApp
+      cd $(ProjectDir)\ClientApp
       npm install
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <PreBuildEvent>
-      cd $(ProjectDir)ClientApp
-      ng build --output-hashing none --configuration production 
+      cd $(ProjectDir)\ClientApp
+      npm run production
     </PreBuildEvent>
   </PropertyGroup>
 </Project>
