@@ -132,7 +132,8 @@
     <None Include="Upendo.Modules.DnnPageManager.dnn" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="01.02.00.txt" />
+    <Content Include="01.01.01.txt" />
+    <Content Include="01.01.00.txt" />
     <Content Include="Images\PageManager.png" />
     <Content Include="index.html" />
     <Content Include="License.txt" />
@@ -145,13 +146,13 @@
   <Import Project="Module.Build" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <PreBuildEvent>
-      cd $(ProjectDir)\ClientApp
+      cd $(ProjectDir)ClientApp
       npm install
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <PreBuildEvent>
-      cd $(ProjectDir)\ClientApp
+      cd $(ProjectDir)ClientApp
       npm run production
     </PreBuildEvent>
   </PropertyGroup>
