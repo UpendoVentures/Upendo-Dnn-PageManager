@@ -1,0 +1,4 @@
+﻿DesktopModules/Upendo.Modules.DnnPageManager/dist/main.js
+DesktopModules/Upendo.Modules.DnnPageManager/dist/runtime.js
+DesktopModules/Upendo.Modules.DnnPageManager/dist/polyfills.js
+DesktopModules/Upendo.Modules.DnnPageManager/dist/styles.css
