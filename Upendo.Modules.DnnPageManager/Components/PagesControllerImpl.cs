@@ -243,7 +243,49 @@ namespace Upendo.Modules.DnnPageManager.Components
                 };
             }
         }
+ public Outcome UpdatePageAllowIndex(int portalId, int tabId, bool fieldValue)
+        {
+            try
+            {
+                var tab = TabController.Instance.GetTab(tabId, portalId);
+                if (tab == null)
+                {
+                    return new Outcome()
+                    {
+                        Success = false,
+                        ErrorMessage = Constants.ERROR_PAGE_TABID_INVALID
+                    };
+                }
+               
+                if (fieldValue == true)
+                {
+                    tab.TabSettings["AllowIndex"] = "true";
+                }
 
+                if (fieldValue == false)
+                {
+                    tab.TabSettings["AllowIndex"] = "false";
+                }
+                                
+                TabController.Instance.UpdateTab(tab);
+
+                return new Outcome()
+                {
+                    Success = true,
+                    ErrorMessage = Constants.SUCCESS_UPDATED
+                };
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                Exceptions.LogException(ex);
+                return new Outcome()
+                {
+                    Success = false,
+                    ErrorMessage = string.Format(Constants.ERROR_FORMAT_UPDATE_VALUE, "Allow Index", ex.Message)
+                };
+            }
+        }
         private Outcome UpdateTabUrl(TabInfo tab, int portalId, string fieldValue)
         {
             var portalSettings = new PortalSettings(portalId);
