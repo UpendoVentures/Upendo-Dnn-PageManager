@@ -20,6 +20,32 @@ dnnspamodule.quickSettings = function(root, moduleId) {
     }
     service.baseUrl = service.framework.getServiceRoot(service.path);
 
+    var FirstTimeSaveSettings = function () {
+        var deferred = $.Deferred();
+        var params = {
+            title: true,
+            description: true,
+            keywords: false
+        };
+        utils.get("POST", "save", service, params,
+            function (data) {
+                deferred.resolve();
+                location.reload();
+            },
+            function (error, exception) {
+                // fail
+                var deferred = $.Deferred();
+                deferred.reject();
+                alert.danger({
+                    selector: parentSelector,
+                    text: error.responseText,
+                    status: error.status
+                });
+            },
+            function () {
+            });
+        return deferred.promise();
+    };
     var SaveSettings = function () {
         
         var title = $('#Title').is(":checked");
@@ -72,6 +98,17 @@ dnnspamodule.quickSettings = function(root, moduleId) {
                 $('#Description').prop('checked', data.description == "true");
                 $('#Keywords').prop('checked', data.keywords == "true");
                 //$('.myCheckbox')[0].checked = true;
+                var stateModule = localStorage.getItem('stateModule')
+                if (data.title == null && stateModule === "inPage" && $('#loadPageMod').text() === "Loading....") {
+                    window.location.reload();
+                }
+                if (data.title == null && $('#loadPageMod').text() !== "Loading....") {
+                    FirstTimeSaveSettings();
+                }
+                localStorage.setItem('stateModule', "inPage");
+                if ($('#loadPageMod').text() !== "Loading....") {
+                    localStorage.removeItem('stateModule');
+                }
             },
             function (error, exception) {
                 // fail
