@@ -1,6 +1,6 @@
 <div class="search-bar">
   <span>Double-clicking on some values with dashed border allows you to edit them.</span>
-  <mat-form-field class="example-form-field" appearance="outline">
+  <mat-form-field class="search-form-field" appearance="outline">
     <mat-icon matPrefix>search</mat-icon>
     <mat-label>Search</mat-label>
     <input matInput type="text" [(ngModel)]="searchText" (keydown.enter)="getPages(true)">
@@ -10,83 +10,82 @@
     </button>
   </mat-form-field>
 </div>
-<div *ngIf="filterMetadata" class="alert alert-warning alert-panel">There are {{total$ | async}} pages missing critical SEO details.</div>
-  <div class="filterButton"  *ngIf="(isWithoutSEO$ | async)">
-  <label>Filter Missing Metadata  </label>
-  <label class="switch">
-    <input type="checkbox"  (click)="filterByMetadata()" [(ngModel)]="filterMetadata">
-    <span class="slider round"></span>
-  </label>
-</div>
-<div>
-  <table *ngIf="!(isLoading$ | async)" mat-table [dataSource]="dataSource$" matSort (matSortChange)="sortData()"
-    [matSortActive]="sortActive" [matSortDirection]="sortDirection">
-    <ng-container matColumnDef="name">
-      <th mat-sort-header="name" mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon (click)="redirectToPage(element)" class="link-icon" title="Show page">link</mat-icon>
-        <span class="dblclick" (dblclick)="edit(element.Id, element.Name, 'Name')">{{ isNullOrEmpty(element.Name)
-          }}</span>
-      </td>
-    </ng-container>
+<div *ngIf="filterMetadata" class="alert alert-warning alert-panel">There are {{total$ | async}} pages missing
+  critical
+  SEO details.</div>
+<div class="overflow-x-auto">
+  <div class="filterButton" *ngIf="(isWithoutSEO$ | async)">
+    <label>Filter Missing Metadata </label>
+    <label class="switch">
+      <input type="checkbox" (click)="filterByMetadata()" [(ngModel)]="filterMetadata">
+      <span class="slider round"></span>
+    </label>
+  </div>
 
-    <ng-container matColumnDef="title">
-      <th mat-sort-header="title" mat-header-cell *matHeaderCellDef>Title</th>
-      <td class="dblclick" mat-cell *matCellDef="let element" (dblclick)="edit(element.Id, element.Title, 'Title')">
-        <span>{{ isNullOrEmpty(element.Title) }}</span>
-      </td>
-    </ng-container>
+  <div class="mat-elevation-z1">
+    <table mat-table *ngIf="!(isLoading$ | async)" mat-table [dataSource]="dataSource$" matSort
+      (matSortChange)="sortData()" [matSortActive]="sortActive" [matSortDirection]="sortDirection">
 
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Description</th>
-      <td class="dblclick" mat-cell *matCellDef="let element"
-        (dblclick)="edit(element.Id, element.Description, 'Description')">
-        <span>{{ isNullOrEmpty(element.Description) }}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-sort-header="name" mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element" data-label="name">
+          <mat-icon (click)="redirectToPage(element)" class="link-icon" title="Show page">link</mat-icon>
+          <span class="dblclick" (dblclick)="edit(element.Id, element.Name, 'Name')">{{ isNullOrEmpty(element.Name)
+            }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-sort-header="title" mat-header-cell *matHeaderCellDef>Title</th>
+        <td class="dblclick" mat-cell *matCellDef="let element" (dblclick)="edit(element.Id, element.Title, 'Title')"
+          data-label="title">
+          <span>{{ isNullOrEmpty(element.Title) }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="keywords">
-      <th mat-header-cell *matHeaderCellDef>Keywords</th>
-      <td class="dblclick" mat-cell *matCellDef="let element"
-        (dblclick)="edit(element.Id, element.Keywords, 'Keywords')">
-        <span>{{ isNullOrEmpty(element.Keywords) }}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td class="dblclick" mat-cell *matCellDef="let element"
+          (dblclick)="edit(element.Id, element.Description, 'Description')" data-label="description">
+          <span>{{ isNullOrEmpty(element.Description) }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="priority">
-      <th mat-header-cell *matHeaderCellDef>Priority</th>
-      <td class="dblclick" mat-cell *matCellDef="let element"
-        (dblclick)="edit(element.Id, element.Priority, 'Priority')" align="center">
-        <span>{{ element.Priority }}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="keywords">
+        <th mat-header-cell *matHeaderCellDef>Keywords</th>
+        <td class="dblclick" mat-cell *matCellDef="let element"
+          (dblclick)="edit(element.Id, element.Keywords, 'Keywords')" data-label="keywords">
+          <span>{{ isNullOrEmpty(element.Keywords) }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="primaryUrl">
-      <th mat-header-cell *matHeaderCellDef>Primary URL</th>
-      <td class="dblclick" mat-cell *matCellDef="let element"
-        (dblclick)="edit(element.Id, element.PrimaryUrl, 'PrimaryUrl')">
-        <span>{{ isNullOrEmpty(element.PrimaryUrl) }}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef>Priority</th>
+        <td class="dblclick" mat-cell *matCellDef="let element"
+          (dblclick)="edit(element.Id, element.Priority, 'Priority')" align="center" data-label="priority">
+          <span>{{ element.Priority }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="permissions">
-      <th mat-header-cell *matHeaderCellDef>Permissions</th>
-      <td class="dblclick" mat-cell *matCellDef="let element" (dblclick)="editPermissions(element)" align="center">
-        <span> View </span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="primaryUrl">
+        <th mat-header-cell *matHeaderCellDef>Primary URL</th>
+        <td class="dblclick" mat-cell *matCellDef="let element"
+          (dblclick)="edit(element.Id, element.PrimaryUrl, 'PrimaryUrl')" data-label="primaryUrl">
+          <span>{{ isNullOrEmpty(element.PrimaryUrl) }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="lastUpdated">
-      <th mat-header-cell *matHeaderCellDef width="10%">Last Updated</th>
-      <td mat-cell *matCellDef="let element">{{ isNullOrEmpty(element.LastUpdated) }}</td>
-    </ng-container>
+      <ng-container matColumnDef="permissions">
+        <th mat-header-cell *matHeaderCellDef>Permissions</th>
+        <td class="dblclick" mat-cell *matCellDef="let element" (dblclick)="editPermissions(element)" align="center"
+          data-label="permissions">
+          <span> View </span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="settings">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element" align="center">
-        <mat-icon (click)="openPageModules(element)" title="Show Module list">view_in_ar</mat-icon>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="lastUpdated">
+        <th mat-header-cell *matHeaderCellDef width="10%">Last Updated</th>
+        <td mat-cell *matCellDef="let element" data-label="lastUpdated">{{ isNullOrEmpty(element.LastUpdated) }}</td>
+      </ng-container>
 
     <ng-container matColumnDef="indexing">
       <th mat-header-cell *matHeaderCellDef></th>
@@ -97,55 +96,58 @@
         </mat-icon>
       </td>
     </ng-container>
+      <ng-container matColumnDef="settings">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" data-label="settings">
+          <mat-icon (click)="openPageModules(element)" title="Show Module list">view_in_ar</mat-icon>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="visibility">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.IsVisible" (dblclick)="updateVisibility(element, false)" title="Hide in Menu">
-          visibility</mat-icon>
-        <mat-icon *ngIf="!element.IsVisible" (dblclick)="updateVisibility(element, true)" title="Show in Menu">
-          visibility_off</mat-icon>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="visibility">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.IsVisible" (dblclick)="updateVisibility(element, false)" title="Hide in Menu">
+            visibility</mat-icon>
+          <mat-icon *ngIf="!element.IsVisible" (dblclick)="updateVisibility(element, true)" title="Show in Menu">
+            visibility_off</mat-icon>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="accessibility">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.HasBeenPublished" title="Page has been published" class="c-default">check_circle
-        </mat-icon>
-        <mat-icon *ngIf="!element.HasBeenPublished" title="Page not been published" class="c-default">
-          radio_button_unchecked</mat-icon>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="accessibility">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.HasBeenPublished" title="Page has been published" class="c-default">check_circle
+          </mat-icon>
+          <mat-icon *ngIf="!element.HasBeenPublished" title="Page not been published" class="c-default">
+            radio_button_unchecked</mat-icon>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <div ngClass="paginator">
-    <div ngClass="mat-paginator">
-      <div style="display: flex; align-items: baseline">
-        <div style="margin-right: 8px">Go to page:</div>
-        <mat-form-field appearance="legacy" style="width: 5vw">
-          <input type="number"
-            matInput
-            [(ngModel)]="goToPage"
-            (keydown.enter)="updateGoToPage()"
-            autocomplete="off"
-          />
-        </mat-form-field>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let element; columns: displayedColumns;">
+      </mat-row>
+    </table>
+
+    <div ngClass="paginator">
+      <div ngClass="mat-paginator">
+        <div style="display: flex; align-items: baseline">
+          <div style="margin-right: 8px">Go to page:</div>
+          <mat-form-field appearance="legacy" style="width: 5vw">
+            <input type="number" matInput [(ngModel)]="goToPage" (keydown.enter)="updateGoToPage()"
+              autocomplete="off" />
+          </mat-form-field>
+        </div>
       </div>
+      <div>
+        <mat-paginator [length]="total$ | async" [pageSizeOptions]="[10, 25,50,100]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+      <!-- <mat-paginator [length]="total$ | async" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
     </div>
-    <div>
-      <mat-paginator [length]="total$ | async"
-        [pageSizeOptions]="[10, 25,50,100]"
-        showFirstLastButtons
-        aria-label="Select page of periodic elements"
-      >
-      </mat-paginator>
-    </div>
-  <!-- <mat-paginator [length]="total$ | async" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
-</div>
 
-<span class="error-message" *ngIf="errorMessage.length > 0">
-  {{ errorMessage }}
-</span>
+    <span class="error-message" *ngIf="errorMessage.length > 0">
+      {{ errorMessage }}
+    </span>
+  </div>
