@@ -132,7 +132,6 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     IsVisible = p.IsVisible,
                     IsAllowedSearch = p.AllowIndex,
                     IsDisabled = p.DisableLink,
-                    IsIndexed = p.Indexed,
                     HasBeenPublished = p.HasBeenPublished
                 }) : pages.OrderBy(s => s.LocalizedTabName).Select(p => new
                 {
@@ -147,7 +146,6 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     IsVisible = p.IsVisible,
                     IsAllowedSearch = p.AllowIndex,
                     IsDisabled = p.DisableLink,
-                    IsIndexed = p.Indexed,
                     HasBeenPublished = p.HasBeenPublished
                 });
 
@@ -486,7 +484,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
 
                 PagesControllerImpl pageController = new PagesControllerImpl();
 
-                var response = pageController.UpdatePageProperty(portalId, tabId, TabFields.Indexed, indexed.ToString());
+                var response = pageController.UpdatePageAllowIndex(portalId, tabId, indexed);
                 return Request.CreateResponse<dynamic>(HttpStatusCode.OK);
             }
             catch (Exception ex)

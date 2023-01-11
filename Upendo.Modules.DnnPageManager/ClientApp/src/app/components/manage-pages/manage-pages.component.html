@@ -87,20 +87,19 @@
         <td mat-cell *matCellDef="let element" data-label="lastUpdated">{{ isNullOrEmpty(element.LastUpdated) }}</td>
       </ng-container>
 
+    <ng-container matColumnDef="indexing">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.IsAllowedSearch" align="center" (dblclick)="updateIndexing(element, false)" title="Page index enabled">zoom_in
+        </mat-icon>
+        <mat-icon *ngIf="!element.IsAllowedSearch" align="center" (dblclick)="updateIndexing(element, true)" title="Page index disabled">zoom_out
+        </mat-icon>
+      </td>
+    </ng-container>
       <ng-container matColumnDef="settings">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element" data-label="settings">
           <mat-icon (click)="openPageModules(element)" title="Show Module list">view_in_ar</mat-icon>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="indexing">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <mat-icon *ngIf="element.IsIndexed" align="center" title="Page index disabled" class="c-default">zoom_in
-          </mat-icon>
-          <mat-icon *ngIf="!element.IsIndexed" align="center" title="Page index enabled" class="c-default">zoom_out
-          </mat-icon>
         </td>
       </ng-container>
 
