@@ -25,8 +25,6 @@
 		<ul>
 			<li>Will Strohl, <a href="https://upendoventures.com/How/People/Will-Strohl" target="_blank">Upendo Ventures</a></li>
 			<li>Ariel Blanco, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
-			<li>Vicente Almea, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
-			<li>Jorge De La Torre, <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a></li>
 		</ul>
 	
 		<h3><strong>Release Note Prefixes</strong></h3>
@@ -36,7 +34,21 @@
 			<li><strong>CI:</strong> Community Inquiry - This issue was reported by a community member in the <a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues" target="_blanK">GitHub issues (or elsewhere)</a>.</li>
 		</ul>
 
-		<h3>Version 01.01.00</h3>
+		<h3>Version 01.01.01</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>SI: Added the Ability to Filter by Missing Metadata (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/31" target="_blank">Issue 31</a>, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>SI: Added the Ability to Toggle Page Indexing On &amp; Off (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/60" target="_blank">Issue 60</a>, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>SI: Indexed &amp; Non-Indexed Pages Have the Same Icon (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/60" target="_blank">Issue 60</a>, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>Updating Page Metadata Can Clear Search Results (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/90" target="_blank">Issue 90</a>, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>Added missing UI elements from the previous release, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+			<li>Fixed Visual Studio build issues, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
+		</ul>
+
+		<h3>Version 01.01.01</h3>
 		<h4>Enhancements</h4>
 		<ul>
 			<li>SI: Updated Angular to v13.3.11 (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/83" target="_blank">Issue 83</a>, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
@@ -46,6 +58,7 @@
 		<h4>Maintenence &amp Bug Fixes</h4>
 		<ul>
 			<li>Updated several build dependencies to resolve automated security reports, thanks <a href="https://github.com/VAlmea" target="_blank">@VAlmea</a>!)</li>
+			<li>Updated the build process in Visual Studio to match what's done outside of VS, thanks <a href="https://github.com/ArielBlanco1990" target="_blank">@ArielBlanco1990</a>!)</li>
 			<li>Updated string handling in earlier PRs, thanks <a href="https://github.com/WillStrohl" target="_blank">@WillStrohl</a>!)</li>
 		</ul>
 

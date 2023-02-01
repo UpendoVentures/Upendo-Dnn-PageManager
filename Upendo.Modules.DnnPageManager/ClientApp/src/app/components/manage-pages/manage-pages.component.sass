@@ -1,70 +1,75 @@
 table
-   width: 100%
+  width: 100%
 
 th.mat-header-cell
-   font-size: 12px
-   font-weight: 700
-   color: #46292B
-   padding: 8px
-   text-transform: uppercase
+  font-size: 12px
+  font-weight: 700
+  color: #46292B
+  padding: 8px
+  text-transform: uppercase
+
+.overflow-x-auto
+  overflow-x: auto
 
 td
-   &.mat-cell
-      font-size: 12px
-      padding: 8px
+  &.mat-cell
+    font-size: 12px
+    padding: 8px
       //cursor: pointer
-      color: #000000
+    color: #000000
 
-   &:first-child,
-   &:nth-child(2)
-      white-space: nowrap
-   
+  &:first-child,
+  &:nth-child(2)
+    white-space: unset
+
 span.dblclick,
 td.dblclick span
-      border-bottom: dashed 1px #c1c3cd
-      cursor: pointer
+  border-bottom: dashed 1px #c1c3cd
+  cursor: pointer
 
 tr:not(.mat-header-row):hover
-   background-color: #f3f3f3
+  background-color: #f3f3f3
 
-mat-icon
-   font-size: 17px
-   width: 17px
-   height: 17px
-   vertical-align: middle
-   cursor: pointer
-   &.c-default
-      cursor: default
+// mat-icon
+//    font-size: 17px
+//    width: 17px
+//    height: 17px
+//    vertical-align: middle
+//    cursor: pointer
+//    &.c-default
+//       cursor: default
 
 .link-icon
-   margin-right: 7px
+  margin-right: 7px
 
 .search-bar
-   display: flex
-   justify-content: space-between
-   margin-bottom: 10px
-   mat-form-field
-      width: 400px
-   .mat-icon
-      color: #46292B
-      margin: 0 7px 4px 0
-      font-size: 17px
+  display: flex
+  justify-content: space-between !important
+  margin-bottom: 10px
+  width: 100%
+  .mat-icon
+    color: #46292B
+    margin: 0 7px 4px 0
+    font-size: 17px
+
+.search-form-field
+  width: 400px
 
 .clear-search
-   cursor: pointer
+  cursor: pointer
 
 ::ng-deep
-   .mat-paginator-outer-container
-      .mat-paginator-container
-         justify-content: space-between
+  .mat-paginator-outer-container
+    .mat-paginator-container
+      justify-content: space-between
       .mat-paginator-range-label
-         margin: 0
+        margin: 0
 
-   .mat-form-field-appearance-outline
-      .mat-form-field-infix
-         font-size: 12px
-         font-weight: 400
-         color: #46292B
+  .mat-form-field-appearance-outline
+    .mat-form-field-infix
+      font-size: 12px
+      font-weight: 400
+      color: #46292B
 
 .error-message
   color: red
@@ -80,9 +85,11 @@ mat-icon
 
 /* The switch - the box around the slider
 .filterButton
-   display: flex
-   flex-direction: row
-   align-items: center
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: right
+  margin-right: 10px
 
 .switch
   position: relative

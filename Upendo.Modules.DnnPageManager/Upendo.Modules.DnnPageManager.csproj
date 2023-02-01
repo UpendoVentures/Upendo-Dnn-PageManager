@@ -132,7 +132,8 @@
     <None Include="Upendo.Modules.DnnPageManager.dnn" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="01.02.00.txt" />
+    <Content Include="01.01.01.txt" />
+    <Content Include="01.01.00.txt" />
     <Content Include="Images\PageManager.png" />
     <Content Include="index.html" />
     <Content Include="License.txt" />
@@ -143,11 +144,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Module.Build" />
-  <!--PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <PreBuildEvent>
       cd $(ProjectDir)ClientApp
-      npm run build
-      ng build REPLACEWITHTWOHYPHENSoutput-hashing none
+      npm install
     </PreBuildEvent>
-  </PropertyGroup-->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <PreBuildEvent>
+      cd $(ProjectDir)ClientApp
+      npm run production
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
