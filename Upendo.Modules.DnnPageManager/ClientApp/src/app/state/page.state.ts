@@ -154,10 +154,11 @@ export class PageState {
       )
       .pipe(
         tap((x) => {
-          console.log(x.Total > 0);
-          console.log(x);
+          var pages = Math.ceil(x.Total / action.pageSize);
+          localStorage.setItem('pages', pages.toString());
+          console.log('pages', pages);
           patchState({
-            isWithoutSEO: x.Total > 0,            
+            isWithoutSEO: x.Total > 0,
           });
         })
       );
