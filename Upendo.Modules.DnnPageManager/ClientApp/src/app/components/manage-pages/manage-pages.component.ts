@@ -68,6 +68,8 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterMetadata = false;
 
+  pages: any = '0';
+
   protected dispose = new Subject<void>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -90,7 +92,9 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.filterMetadata = localStorage.getItem("filterMetadata") === "true" ? true : false;
+    this.filterMetadata =
+      localStorage.getItem('filterMetadata') === 'true' ? true : false;
+    this.pages = localStorage.getItem('pages');
     this.store
       .select(PageState.updated)
       .pipe(
@@ -125,18 +129,15 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
-  filterByMetadata():void {
-
+  filterByMetadata(): void {
     this.filterMetadata = !this.filterMetadata;
 
     localStorage.setItem('filterMetadata', JSON.stringify(this.filterMetadata));
 
     this.getPages(false, true);
-
   }
 
-  isNeededFilterByMetadata():void{
-    
+  isNeededFilterByMetadata(): void {
     const portalId = this.context._properties.PortalId;
     const sortType = localStorage.getItem('sortType');
     const sortBy = localStorage.getItem('sortBy');
@@ -147,7 +148,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
         new GetAllPagesWithoutSEO(
           portalId,
           !!searchValue ? searchValue : this.searchText,
-          this.paginator ? !!searchValue ? 0 : this.paginator.pageIndex : 0,
+          this.paginator ? (!!searchValue ? 0 : this.paginator.pageIndex) : 0,
           this.paginator ? this.paginator.pageSize : 10,
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction,
@@ -167,7 +168,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         })
       )
-      .subscribe();      
+      .subscribe();
   }
 
   getPages(showClearSearch: boolean, isInit: boolean = false): void {
@@ -179,8 +180,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.paginator.pageIndex = 0;
     }
 
-    if (isInit)
-      this.paginator.pageIndex = 0;
+    if (isInit) this.paginator.pageIndex = 0;
 
     if (!!this.sort) {
       localStorage.setItem(
@@ -203,7 +203,11 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
         new GetAllPages(
           portalId,
           !!searchValue ? searchValue : this.searchText,
-          this.paginator ? !!searchValue || isInit ? 0 : this.paginator.pageIndex : 0,
+          this.paginator
+            ? !!searchValue || isInit
+              ? 0
+              : this.paginator.pageIndex
+            : 0,
           this.paginator ? this.paginator.pageSize : 10,
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction,
