@@ -1,94 +1,96 @@
 table
- width: 100%
+  width: 100%
 
 th.mat-header-cell
-   font-size: 12px
-   font-weight: 700
-   color: #46292B
-   padding: 8px
-   text-transform: uppercase
-   &:not(:first-child)
-      text-align: center
+  font-size: 12px
+  font-weight: 700
+  color: #46292B
+  padding: 8px
+  text-transform: uppercase
+  &:not(:first-child)
+    text-align: center
 
 td
-   &.mat-cell
-      font-size: 12px
-      padding: 8px
-      /* cursor: pointer */
-      color: #000000
-   mat-checkbox
-      cursor: not-allowed
+  &.mat-cell
+    font-size: 12px
+    padding: 8px
+  //  cursor: pointer
+    color: #000000
+  //  mat-checkbox
+    cursor: not-allowed
 
-mat-icon
-   font-size: 18px
-   width: 18px
-   height: 18px
-   margin-right: 7px
-   vertical-align: middle
-   cursor: pointer
+// mat-icon
+//     font-size: 18px
+//     width: 18px
+//     height: 18px
+//     margin-right: 7px
+//     vertical-align: middle
+//     cursor: pointer
 
 h2
-   font-size: 16px
-   font-weight: 700
-   color: #000000
-   text-align: left
+  font-size: 16px
+  font-weight: 700
+  color: #000000
+  text-align: left
 
 .mat-dialog-actions
-   justify-content: center
-  
-.button
-   border: 1px solid #3f51b5
-   height: 34px
-   padding: 0 22px
-   font-size: 14px
-   line-height: 34px
-   color: #3f51b5
-   background: #FFFFFF
-   border-radius: 3px
-   cursor: pointer
+  justify-content: center
 
 .button
-   &:hover,
-   &:focus,
-   &:visited
-      color: #3f51b5!important
-      background: #f5f8fa!important
+  border: 1px solid #3f51b5
+  height: 34px
+  padding: 0 22px
+  font-size: 14px
+  line-height: 34px
+  color: #3f51b5
+  background: #FFFFFF
+  border-radius: 3px
+  cursor: pointer
 
 .button
-   &:disabled,
-   &[disabled],
-   &:disabled:hover,
-   &:disabled:focus,
-   &:disabled:visited
-      border: 1px solid #999999 !important
-      background-color: rgba(0,0,0,.12) !important
-      color: #666666 !important
-      cursor: not-allowed !important
-      pointer-events: none
+  &:hover,
+  &:focus,
+  &:visited
+    color: #3f51b5!important
+    background: #f5f8fa!important
+
+.button
+  &:disabled,
+  &[disabled],
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:visited
+    border: 1px solid #999999 !important
+    background-color: rgba(0,0,0,.12) !important
+    color: #666666 !important
+    cursor: not-allowed !important
+    pointer-events: none
 
 a
-   &:hover,
-   &:focus,
-   &:visited
-      text-decoration: none
-      font-family: Roboto, "Helvetica Neue", sans-serif
-      background: #FFFFFF
-
+  &:hover,
+  &:focus,
+  &:visited
+    text-decoration: none
+    font-family: Roboto, "Helvetica Neue", sans-serif
+    background: #FFFFFF
 
 ::ng-deep .mat-checkbox-checked
-   &.mat-accent
-      .mat-checkbox-background 
-         background-color: #d3d3d3
+  &.mat-accent
+    .mat-checkbox-background
+      background-color: #d3d3d3
 
-::ng-deep 
-   .mat-checkbox-checkmark-path 
-      stroke: #707070 !important
-    
-   .mat-button-focus-overlay
-      background-color: transparent
+::ng-deep
+  .mat-checkbox-checkmark-path
+    stroke: #707070 !important
+
+  .mat-button-focus-overlay
+    background-color: transparent
 
 .table-container
-   margin-bottom: 20px
+  margin-bottom: 20px
 
-.info 
-   padding: 10px 0
+.info
+  padding: 10px 0
+
+.text_center
+  text-align: center

@@ -133,9 +133,9 @@
 
     <div ngClass="paginator">
       <div ngClass="mat-paginator">
-        <div style="display: flex; align-items: baseline ;margin-top: 8px; margin-right: 30px;">
-          <div style="margin-right: 20px">Go to page:</div>
-          <mat-form-field appearance="legacy" style="width: 5vw">
+        <div class="paginator">
+          <div class="go_to_page">Go to page:</div>
+          <mat-form-field appearance="legacy" class="mat_form_field">
             <input type="number" matInput [(ngModel)]="goToPage" (keydown.enter)="updateGoToPage()"
               autocomplete="off" />
           </mat-form-field>
