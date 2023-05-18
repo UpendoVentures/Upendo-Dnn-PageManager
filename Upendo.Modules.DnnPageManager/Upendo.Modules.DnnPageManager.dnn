@@ -1,16 +1,16 @@
 ﻿<dotnetnuke type="Package" version="5.0">
 	<packages>
-		<package name="Upendo.Modules.DnnPageManager" type="Module" version="01.01.01">
+		<package name="Upendo.Modules.DnnPageManager" type="Module" version="01.01.02">
 			<friendlyName>Upendo DNN PageManager</friendlyName>
 			<description>
 				This is a page management module meant to help make managing pages in DNN easier for all end-users, built by Upendo Ventures.
 			</description>
 			<iconFile>~/DesktopModules/Upendo.Modules.DnnPageManager/Images/PageManager.png</iconFile>
 			<owner>
-				<name>Upendo Modules</name>
-				<organization>Upendo Ventures, LLC</organization>
-				<url>https://upendoventures.com</url>
-				<email>solutions@upendoventures.com</email>
+        <name>Will Strohl</name>
+        <organization>Upendo Ventures, LLC</organization>
+        <url>https://upendoventures.com/What/CMS/DNN</url>
+        <email>solutions@upendoventures.com</email>
 			</owner>
 			<license src="License.txt" />
 			<releaseNotes src="ReleaseNotes.txt" />
@@ -64,7 +64,7 @@
 						<attributes>
 							<businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
 							<desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
-              <upgradeVersionsList>01.00.00,01.00.01,01.00.02,01.01.01</upgradeVersionsList>
+              <upgradeVersionsList>01.00.00,01.00.01,01.00.02,01.01.01,01.01.02</upgradeVersionsList>
 						</attributes>
 					</eventMessage>
 				</component>
@@ -72,7 +72,7 @@
 					<assemblies>
 						<assembly>
 							<name>Upendo.Modules.DnnPageManager.dll</name>
-							<version>01.01.01</version>
+							<version>01.01.02</version>
 							<path>bin</path>
 						</assembly>
 						<assembly>
