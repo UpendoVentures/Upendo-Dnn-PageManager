@@ -50,7 +50,7 @@ namespace Upendo.Modules.DnnPageManager.Components
         }
 
         public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10,
-                                            string sortBy = "", string sortType = "", bool? deleted = false)
+                                            string sortBy = "", string sortType = "", bool? deleted = false,bool? getAllPages=false)
         {
             try
             {
@@ -114,7 +114,8 @@ namespace Upendo.Modules.DnnPageManager.Components
                 finalList.AddRange(pages);
 
                 total = finalList.Count;
-                return pageIndex == -1 || pageSize == -1 ? finalList : finalList.Skip(pageIndex * pageSize).Take(pageSize);
+               
+                return pageIndex == -1 || pageSize == -1 ? finalList : getAllPages==true? finalList : finalList.Skip(pageIndex * pageSize).Take(pageSize);
             }
             catch (Exception ex)
             {
@@ -126,7 +127,7 @@ namespace Upendo.Modules.DnnPageManager.Components
 
         }
 
-        public IEnumerable<Module> GetPageModules(int portalId, int tabId)
+      public IEnumerable<Module> GetPageModules(int portalId, int tabId)
         {
             try
             {
@@ -385,6 +386,51 @@ namespace Upendo.Modules.DnnPageManager.Components
                 LogError(e);
                 throw;
             }
+        }
+        public IEnumerable<Page> GetPagesMissingMetadata(IEnumerable<Model.Page> pages, ModuleInfo ActiveModule, bool? filterMetadata = false)
+        {
+          var pagesMissingMetadata = new List<Model.Page>();
+            if (filterMetadata.HasValue && ActiveModule.ModuleSettings.Count > 1)
+            {
+                if (filterMetadata.Value)
+                {
+                    if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Title].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
+                    {
+                        var filterTitle = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
+                        foreach (var item in filterTitle)
+                        {
+                            if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
+                            {
+                                pagesMissingMetadata.Add(item);
+                            }
+                        }
+                    }
+                    if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Description].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
+                    {
+                        var filterDescription = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
+                        foreach (var item in filterDescription)
+                        {
+                            if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
+                            {
+                                pagesMissingMetadata.Add(item);
+                            }
+                        }
+
+                    }
+                    if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Keywords].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
+                    {
+                        var filterKeyWords = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
+                        foreach (var item in filterKeyWords)
+                        {
+                            if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
+                            {
+                                pagesMissingMetadata.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            return pagesMissingMetadata.ToList();
         }
 
         private static void LogError(Exception ex)

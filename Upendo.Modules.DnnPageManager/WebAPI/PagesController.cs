@@ -58,7 +58,6 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 settings.Keywords = Constants.QuickSettings.MODSETTING_DefaultFalse;
             }
             int total = 0;
-
             try
             {
                 if (SecurityService.IsPagesAdminUser() == false)
@@ -67,57 +66,16 @@ namespace Upendo.Modules.DnnPageManager.Controller
                 }
 
                 PagesControllerImpl pageController = new PagesControllerImpl();
-                
                 var pages = pageController.GetPagesList(portalId: portalId,
-                                                         total: out total,
-                                                         searchKey: searchKey,
-                                                         pageIndex: pageIndex,
-                                                         pageSize: pageSize,
-                                                         sortBy: sortBy,
-                                                         sortType: sortType,
-                                                         deleted: deleted
-                                                         );
-                var pagesMissingMetadata = new List<Model.Page>();
-                if (filterMetadata.HasValue && ActiveModule.ModuleSettings.Count > 1)
-                {
-                    if (filterMetadata.Value)
-                    {
-                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Title].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
-                        {
-                            var filterTitle = pages.Where(tab => string.IsNullOrEmpty(tab.Title));
-                            foreach (var item in filterTitle)
-                            {
-                                if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
-                                {
-                                    pagesMissingMetadata.Add(item);
-                                }
-                            }
-                        }
-                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Description].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
-                        {
-                            var filterDescription = pages.Where(tab => string.IsNullOrEmpty(tab.Description));
-                            foreach (var item in filterDescription)
-                            {
-                                if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
-                                {
-                                    pagesMissingMetadata.Add(item);
-                                }
-                            }
-
-                        }
-                        if (ActiveModule.ModuleSettings[Constants.QuickSettings.MODSETTING_Keywords].ToString().Equals(Constants.QuickSettings.MODSETTING_DefaultTrue))
-                        {
-                            var filterKeyWords = pages.Where(tab => string.IsNullOrEmpty(tab.KeyWords));
-                            foreach (var item in filterKeyWords)
-                            {
-                                if (!pagesMissingMetadata.Any(s => s.KeyID == item.KeyID))
-                                {
-                                    pagesMissingMetadata.Add(item);
-                                }
-                            }
-                        }
-                    }
-                }
+                                                                         total: out total,
+                                                                         searchKey: searchKey,
+                                                                         pageIndex: pageIndex,
+                                                                         pageSize: pageSize,
+                                                                         sortBy: sortBy,
+                                                                         sortType: sortType,
+                                                                         deleted: deleted
+                                                                         );
+                var pagesMissingMetadata = pageController.GetPagesMissingMetadata(pages, ActiveModule, filterMetadata).ToList();
 
                 var result = filterMetadata.Value ? pagesMissingMetadata.OrderBy(s => s.LocalizedTabName).Select(p => new
                 {
@@ -149,7 +107,11 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     HasBeenPublished = p.HasBeenPublished
                 });
 
-                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = result.Count().ToString(), result });
+                var allPages = pageController.GetPagesList(portalId: portalId, total: out total, searchKey: searchKey,pageIndex: pageIndex, pageSize: pageSize,
+                                                         sortBy: sortBy, sortType: sortType, deleted: deleted, getAllPages:true );
+                pagesMissingMetadata = pageController.GetPagesMissingMetadata(allPages, ActiveModule, filterMetadata).ToList();
+                
+                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total= filterMetadata.Value ? pagesMissingMetadata.Count() : allPages.Count(), result });
             }
             catch (Exception ex)
             {
