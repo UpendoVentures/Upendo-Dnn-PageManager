@@ -3,7 +3,7 @@
 This module allows you to delegate the page management responsibilities to people that are not an Administrator.  Ordinarily, you'd have to promote the person to having full admin rights to the entire website, just to get some help managing pages and **applying SEO updates**.  This module fixes that mess!  
 
 ## How to Use 💪🏽  
-All you need to do is [download the latest release](https://github.com/UpendoVentures/Upendo-Dnn-UserManager/releases/latest), and [don't forget to unblock the installation package](https://hotcakescommerce.zendesk.com/hc/en-us/articles/10932095222157-How-to-Unblock-File-Downloads).  
+All you need to do is [download the latest release](https://github.com/UpendoVentures/Upendo-Dnn-PageManager/releases/latest), and [don't forget to unblock the installation package](https://hotcakescommerce.zendesk.com/hc/en-us/articles/10932095222157-How-to-Unblock-File-Downloads).  
 
 Next, [install this module](https://www.youtube.com/watch?v=MgLaV0J_eLk&list=PLojRGd54eWTiK-0y8o5EBYVcCY2yzhTZk&index=4&pp=gAQBiAQB) like you would at any other time, then add it to a page.  
 
