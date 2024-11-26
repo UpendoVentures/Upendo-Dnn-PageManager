@@ -21,6 +21,7 @@ import { Select, Store } from '@ngxs/store';
 import {
   GetAllPages,
   GetAllPagesWithoutSEO,
+  GetAllPagesUnpublished,
   PageState,
   SetDefaultState,
   UpdatePageIndexing,
@@ -60,6 +61,9 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   @Select(PageState.totalWithoutSEO)
   isWithoutSEO$: Observable<boolean>;
 
+  @Select(PageState.totalUnpublished)
+  isUnpublished$: Observable<boolean>;
+
   searchText = '';
 
   showClearSearch = false;
@@ -67,6 +71,8 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string = '';
 
   filterMetadata = false;
+
+  filterUnpublished = false;
 
   pages: any = '0';
 
@@ -94,6 +100,8 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.filterMetadata =
       localStorage.getItem('filterMetadata') === 'true' ? true : false;
+    this.filterUnpublished =
+      localStorage.getItem('filterUnpublished') === 'true' ? true : false;
     this.pages = localStorage.getItem('pages');
     this.store
       .select(PageState.updated)
@@ -119,6 +127,7 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.getPages(false, true);
       this.isNeededFilterByMetadata();
+      this.isNeededFilterByUnpublished();
     }, 1000);
 
     this.paginator.page
@@ -131,8 +140,22 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterByMetadata(): void {
     this.filterMetadata = !this.filterMetadata;
-
+    if (this.filterMetadata) {
+      this.filterUnpublished = false;
+      localStorage.setItem('filterUnpublished', 'false');
+    }
     localStorage.setItem('filterMetadata', JSON.stringify(this.filterMetadata));
+
+    this.getPages(false, true);
+  }
+
+  filterByUnpublished(): void {
+    this.filterUnpublished = !this.filterUnpublished;
+    if (this.filterUnpublished) {
+      this.filterMetadata = false;
+      localStorage.setItem('filterMetadata', 'false');
+    }
+    localStorage.setItem('filterUnpublished', JSON.stringify(this.filterUnpublished));
 
     this.getPages(false, true);
   }
@@ -153,6 +176,40 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction,
           true
+        )
+      )
+      .pipe(
+        take(1),
+        tap(() => {
+          this.showClearSearch = false;
+          if (!!searchValue) {
+            this.searchText = searchValue;
+          }
+          if (!!sortBy && !!sortType) {
+            this.sortActive = sortBy;
+            this.sortDirection = sortType as SortDirection;
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  isNeededFilterByUnpublished(): void {
+    const portalId = this.context._properties.PortalId;
+    const sortType = localStorage.getItem('sortType');
+    const sortBy = localStorage.getItem('sortBy');
+    const searchValue = localStorage.getItem('searchText');
+
+    this.store
+      .dispatch(
+        new GetAllPagesUnpublished(
+          portalId,
+          !!searchValue ? searchValue : this.searchText,
+          this.paginator ? (!!searchValue ? 0 : this.paginator.pageIndex) : 0,
+          this.paginator ? this.paginator.pageSize : 10,
+          !!sortBy ? sortBy : this.sort?.active,
+          !!sortType ? sortType : this.sort?.direction,
+          true 
         )
       )
       .pipe(
@@ -211,7 +268,8 @@ export class ManagePagesComponent implements OnInit, OnDestroy, AfterViewInit {
           this.paginator ? this.paginator.pageSize : 10,
           !!sortBy ? sortBy : this.sort?.active,
           !!sortType ? sortType : this.sort?.direction,
-          this.filterMetadata
+          this.filterMetadata,
+          this.filterUnpublished
         )
       )
       .pipe(

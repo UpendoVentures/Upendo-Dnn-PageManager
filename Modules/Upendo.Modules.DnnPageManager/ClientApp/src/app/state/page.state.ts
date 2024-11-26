@@ -15,6 +15,7 @@ import {
   SetDefaultState,
   GetPageModules,
   GetAllPagesWithoutSEO,
+  GetAllPagesUnpublished,
 } from './page.actions';
 import {
   PageModel,
@@ -33,6 +34,7 @@ export interface PageStateModel {
   permissions: PermissionsModel;
   total: number;
   isWithoutSEO: boolean;
+  isUnpublished: boolean;
   updated: boolean;
   modules: Array<PageModuleModel>;
 }
@@ -43,6 +45,7 @@ export interface PageStateModel {
     isLoading: false,
     total: 0,
     isWithoutSEO: false,
+    isUnpublished: false,
     pages: [],
     urls: [],
     permissions: {
@@ -75,6 +78,11 @@ export class PageState {
   @Selector()
   static totalWithoutSEO(state: PageStateModel): boolean {
     return state?.isWithoutSEO;
+  }
+
+  @Selector()
+  static totalUnpublished(state: PageStateModel): boolean {
+    return state?.isUnpublished;
   }
 
   @Selector()
@@ -122,7 +130,8 @@ export class PageState {
         action.pageSize,
         action.sortBy,
         action.sortType,
-        action.filterMetadata
+        action.filterMetadata,
+        action.filterUnpublished
       )
       .pipe(
         tap((x) => {
@@ -150,7 +159,8 @@ export class PageState {
         action.pageSize,
         action.sortBy,
         action.sortType,
-        action.filterMetadata
+        action.filterMetadata,
+        action.filterUnpublished,
       )
       .pipe(
         tap((x) => {
@@ -159,6 +169,36 @@ export class PageState {
           console.log('pages', pages);
           patchState({
             isWithoutSEO: x.Total > 0,
+          });
+        })
+      );
+  }
+
+  @Action(GetAllPagesUnpublished, { cancelUncompleted: true })
+  getAllPagesUnpublished(
+    { patchState }: StateContext<PageStateModel>,
+    action: GetAllPages
+  ): Observable<any> {
+    patchState({ isLoading: true });
+
+    return this.pageService
+      .getPages(
+        action.portalId,
+        action.searchKey,
+        action.pageIndex,
+        action.pageSize,
+        action.sortBy,
+        action.sortType,
+        action.filterMetadata,
+        action.filterUnpublished,
+      )
+      .pipe(
+        tap((x) => {
+          var pages = Math.ceil(x.Total / action.pageSize);
+          localStorage.setItem('pages', pages.toString());
+          console.log('pages', pages);
+          patchState({
+            isUnpublished: x.Total > 0,
           });
         })
       );

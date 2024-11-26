@@ -8,7 +8,8 @@ export class GetAllPages {
     public pageSize: number,
     public sortBy: string,
     public sortType: string,
-    public filterMetadata: boolean
+    public filterMetadata: boolean,
+    public filterUnpublished: boolean
   ) {}
 }
 
@@ -23,6 +24,20 @@ export class GetAllPagesWithoutSEO {
     public sortBy: string,
     public sortType: string,
     public filterMetadata: boolean
+  ) {}
+}
+
+export class GetAllPagesUnpublished {
+  static readonly type = '[USER] Get All Pages Unpublished';
+
+  constructor(
+    public portalId: number,
+    public searchKey: string,
+    public pageIndex: number,
+    public pageSize: number,
+    public sortBy: string,
+    public sortType: string,
+    public filterUnpublished: boolean
   ) {}
 }
 

@@ -33,13 +33,13 @@ using Constants = Upendo.Modules.DnnPageManager.Common.Constants;
 
 namespace Upendo.Modules.DnnPageManager.Components
 {
-    public class PagesControllerImpl 
+    public class PagesControllerImpl
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesControllerImpl));
 
         private static IMapper Mapper;
 
-        public PagesControllerImpl() 
+        public PagesControllerImpl()
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -50,7 +50,7 @@ namespace Upendo.Modules.DnnPageManager.Components
         }
 
         public IEnumerable<Page> GetPagesList(int portalId, out int total, string searchKey = "", int pageIndex = -1, int pageSize = 10,
-                                            string sortBy = "", string sortType = "", bool? deleted = false,bool? getAllPages=false)
+                                            string sortBy = "", string sortType = "", bool? deleted = false, bool? getAllPages = false)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                 bool includeDeleted = true;
                 bool includeSubpages = true;
                 bool? visible = null;
-                
+
                 var tabs = TabController.GetPortalTabs(portalSettings.PortalId, adminTabId, false, includeHidden, includeDeleted, true);
                 var pages = from t in tabs
                             where (t.ParentId != adminTabId || t.ParentId == Null.NullInteger) &&
@@ -114,8 +114,8 @@ namespace Upendo.Modules.DnnPageManager.Components
                 finalList.AddRange(pages);
 
                 total = finalList.Count;
-               
-                return pageIndex == -1 || pageSize == -1 ? finalList : getAllPages==true? finalList : finalList.Skip(pageIndex * pageSize).Take(pageSize);
+
+                return pageIndex == -1 || pageSize == -1 ? finalList : getAllPages == true ? finalList : finalList.Skip(pageIndex * pageSize).Take(pageSize);
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace Upendo.Modules.DnnPageManager.Components
 
         }
 
-      public IEnumerable<Module> GetPageModules(int portalId, int tabId)
+        public IEnumerable<Module> GetPageModules(int portalId, int tabId)
         {
             try
             {
@@ -244,7 +244,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                 };
             }
         }
- public Outcome UpdatePageAllowIndex(int portalId, int tabId, bool fieldValue)
+        public Outcome UpdatePageAllowIndex(int portalId, int tabId, bool fieldValue)
         {
             try
             {
@@ -257,7 +257,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                         ErrorMessage = Constants.ERROR_PAGE_TABID_INVALID
                     };
                 }
-               
+
                 if (fieldValue == true)
                 {
                     tab.TabSettings["AllowIndex"] = "true";
@@ -267,7 +267,7 @@ namespace Upendo.Modules.DnnPageManager.Components
                 {
                     tab.TabSettings["AllowIndex"] = "false";
                 }
-                                
+
                 TabController.Instance.UpdateTab(tab);
 
                 return new Outcome()
@@ -389,7 +389,7 @@ namespace Upendo.Modules.DnnPageManager.Components
         }
         public IEnumerable<Page> GetPagesMissingMetadata(IEnumerable<Model.Page> pages, ModuleInfo ActiveModule, bool? filterMetadata = false)
         {
-          var pagesMissingMetadata = new List<Model.Page>();
+            var pagesMissingMetadata = new List<Model.Page>();
             if (filterMetadata.HasValue && ActiveModule.ModuleSettings.Count > 1)
             {
                 if (filterMetadata.Value)
@@ -431,6 +431,19 @@ namespace Upendo.Modules.DnnPageManager.Components
                 }
             }
             return pagesMissingMetadata.ToList();
+        }
+
+        public IEnumerable<Page> GetPagesUnpublished(IEnumerable<Model.Page> pages, ModuleInfo ActiveModule, bool? filterUnpublished = false)
+        {
+            var pagesUnpublished = new List<Model.Page>();
+            foreach (var page in pages)
+            {
+                if (!page.HasBeenPublished)
+                {
+                    pagesUnpublished.Add(page);
+                }
+            }
+            return pagesUnpublished.ToList();
         }
 
         private static void LogError(Exception ex)

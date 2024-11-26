@@ -34,7 +34,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
 
-        public PagesController() 
+        public PagesController()
         {
         }
 
@@ -43,7 +43,7 @@ namespace Upendo.Modules.DnnPageManager.Controller
         [DnnAuthorize]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         public HttpResponseMessage GetPagesList(int portalId, string searchKey = "", int pageIndex = -1, int pageSize = 10, string sortBy = "",
-                                                string sortType = "", bool? deleted = false, bool? filterMetadata = false)
+                                                string sortType = "", bool? deleted = false, bool? filterMetadata = false, bool? filterUnpublished = false)
         {
             //Method to generate the Settings_Names on the first load
             if (ActiveModule.ModuleSettings.Count <= 1)
@@ -75,9 +75,59 @@ namespace Upendo.Modules.DnnPageManager.Controller
                                                                          sortType: sortType,
                                                                          deleted: deleted
                                                                          );
-                var pagesMissingMetadata = pageController.GetPagesMissingMetadata(pages, ActiveModule, filterMetadata).ToList();
+                var allPages = pageController.GetPagesList(portalId: portalId, total: out total, searchKey: searchKey, pageIndex: pageIndex, pageSize: pageSize,
+                                                            sortBy: sortBy, sortType: sortType, deleted: deleted, getAllPages: true);
+                object result;
+                if (filterMetadata.HasValue && filterMetadata.Value)
+                {
+                    var pagesMissingMetadata = pageController.GetPagesMissingMetadata(pages, ActiveModule, filterMetadata).ToList();
 
-                var result = filterMetadata.Value ? pagesMissingMetadata.OrderBy(s => s.LocalizedTabName).Select(p => new
+                    result = pagesMissingMetadata.OrderBy(s => s.LocalizedTabName).Select(p => new
+                    {
+                        Id = p.TabID,
+                        Name = p.LocalizedTabName,
+                        Title = p.Title,
+                        Description = p.Description,
+                        Keywords = p.KeyWords,
+                        Priority = p.SiteMapPriority,
+                        PrimaryUrl = pageController.GetPageUrls(p.PortalID, p.TabID).FirstOrDefault().Path,
+                        LastUpdated = string.Format(Constants.FORMAT_LASTUPDATED, (p.LastModifiedByUserID == Null.NullInteger ? Constants.SYSTEM : p.LastModifiedByUser(portalId).FirstName), (p.LastModifiedByUserID == Null.NullInteger ? Constants.ACCOUNT : p.LastModifiedByUser(portalId).LastName), p.LastModifiedOnDate.ToString(Constants.FORMAT_DATE)),
+                        IsVisible = p.IsVisible,
+                        IsAllowedSearch = p.AllowIndex,
+                        IsDisabled = p.DisableLink,
+                        HasBeenPublished = p.HasBeenPublished
+                    });
+
+                    pagesMissingMetadata = pageController.GetPagesMissingMetadata(allPages, ActiveModule, filterMetadata).ToList();
+
+                    return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = filterMetadata.Value ? pagesMissingMetadata.Count() : allPages.Count(), result });
+                }
+                if (filterUnpublished.HasValue && filterUnpublished.Value)
+                {
+                    var pagesUnpublished = pageController.GetPagesUnpublished(pages, ActiveModule, filterUnpublished).ToList();
+
+                    result = pagesUnpublished.OrderBy(s => s.LocalizedTabName).Select(p => new
+                    {
+                        Id = p.TabID,
+                        Name = p.LocalizedTabName,
+                        Title = p.Title,
+                        Description = p.Description,
+                        Keywords = p.KeyWords,
+                        Priority = p.SiteMapPriority,
+                        PrimaryUrl = pageController.GetPageUrls(p.PortalID, p.TabID).FirstOrDefault().Path,
+                        LastUpdated = string.Format(Constants.FORMAT_LASTUPDATED, (p.LastModifiedByUserID == Null.NullInteger ? Constants.SYSTEM : p.LastModifiedByUser(portalId).FirstName), (p.LastModifiedByUserID == Null.NullInteger ? Constants.ACCOUNT : p.LastModifiedByUser(portalId).LastName), p.LastModifiedOnDate.ToString(Constants.FORMAT_DATE)),
+                        IsVisible = p.IsVisible,
+                        IsAllowedSearch = p.AllowIndex,
+                        IsDisabled = p.DisableLink,
+                        HasBeenPublished = p.HasBeenPublished
+                    });
+
+                    pagesUnpublished = pageController.GetPagesUnpublished(allPages, ActiveModule, filterUnpublished).ToList();
+
+                    return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = filterUnpublished.Value ? pagesUnpublished.Count() : allPages.Count(), result });
+                }
+
+                result = pages.OrderBy(s => s.LocalizedTabName).Select(p => new
                 {
                     Id = p.TabID,
                     Name = p.LocalizedTabName,
@@ -91,28 +141,12 @@ namespace Upendo.Modules.DnnPageManager.Controller
                     IsAllowedSearch = p.AllowIndex,
                     IsDisabled = p.DisableLink,
                     HasBeenPublished = p.HasBeenPublished
-                }) : pages.OrderBy(s => s.LocalizedTabName).Select(p => new
-                {
-                    Id = p.TabID,
-                    Name = p.LocalizedTabName,
-                    Title = p.Title,
-                    Description = p.Description,
-                    Keywords = p.KeyWords,
-                    Priority = p.SiteMapPriority,
-                    PrimaryUrl = pageController.GetPageUrls(p.PortalID, p.TabID).FirstOrDefault().Path,
-                    LastUpdated = string.Format(Constants.FORMAT_LASTUPDATED, (p.LastModifiedByUserID == Null.NullInteger ? Constants.SYSTEM : p.LastModifiedByUser(portalId).FirstName), (p.LastModifiedByUserID == Null.NullInteger ? Constants.ACCOUNT : p.LastModifiedByUser(portalId).LastName), p.LastModifiedOnDate.ToString(Constants.FORMAT_DATE)),
-                    IsVisible = p.IsVisible,
-                    IsAllowedSearch = p.AllowIndex,
-                    IsDisabled = p.DisableLink,
-                    HasBeenPublished = p.HasBeenPublished
-                });
+                }).ToList();
 
-                var allPages = pageController.GetPagesList(portalId: portalId, total: out total, searchKey: searchKey,pageIndex: pageIndex, pageSize: pageSize,
-                                                         sortBy: sortBy, sortType: sortType, deleted: deleted, getAllPages:true );
-                pagesMissingMetadata = pageController.GetPagesMissingMetadata(allPages, ActiveModule, filterMetadata).ToList();
-                
-                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total= filterMetadata.Value ? pagesMissingMetadata.Count() : allPages.Count(), result });
+                return Request.CreateResponse<dynamic>(HttpStatusCode.OK, new { Total = allPages.Count(), result });
+
             }
+
             catch (Exception ex)
             {
                 LogError(ex);
