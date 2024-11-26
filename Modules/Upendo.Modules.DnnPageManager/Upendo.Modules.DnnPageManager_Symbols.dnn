@@ -22,7 +22,8 @@
       <components>
         <component type="ResourceFile">
           <resourceFiles>
-            <basePath></basePath>
+            <basePath>
+            </basePath>
             <resourceFile>
               <name>Resources.zip</name>
             </resourceFile>

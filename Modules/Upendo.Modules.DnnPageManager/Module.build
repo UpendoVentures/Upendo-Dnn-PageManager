@@ -4,17 +4,19 @@
     <DNNFileName>Upendo.Modules.DnnPageManager</DNNFileName>
     <PackageName>Upendo.Modules.DnnPageManager</PackageName>
     <Extension>zip</Extension>
-    <BuildScriptsPath>$(MSBuildProjectDirectory)\..\Build</BuildScriptsPath>
-    <WebsitePath>$(MSBuildProjectDirectory)\..\Website</WebsitePath>
+    <BuildScriptsPath>$(MSBuildProjectDirectory)\..\..\Build</BuildScriptsPath>
+    <WebsitePath>$(MSBuildProjectDirectory)\..\..\Website</WebsitePath>
     <WebsiteInstallPath>$(WebsitePath)\Install\Module</WebsiteInstallPath>
     <FullModulePath>$(WebsitePath)\DesktopModules\$(ModulePath)</FullModulePath>
   </PropertyGroup>
   <Import Project="$(BuildScriptsPath)\ModulePackage.Targets" />
+  <Target Name="BeforeBuild" DependsOnTargets="SetVersion">
+  </Target>
   <Target Name="AfterBuild" DependsOnTargets="CopyBin;GetFiles;DebugProject;PackageModule">
   </Target>
   <Target Name="GetFiles">
     <ItemGroup>
-      <Manifest Include="*.dnn;*.dnn5;*.dnn6" />
+      <Manifest Include="*.dnn;*.dnn5;*.dnn6" Exclude="*_Symbols.dnn"  />
       <TextFiles Include="*.txt" Exclude="releasenotes.txt;license.txt" />
       <SourceFiles Include="*.css;*.htm;*.html" />
       <Views Include="*.ascx;" />
@@ -22,19 +24,22 @@
       <Images Include="Images/**/*.*" />
       <JsFiles Include="js/**/*.*" />
       <Styles Include="Styles/**/*.*" />
+      <Libraries Include="bin/*.dll;bin/*.pdb" Exclude="bin/DotNetNuke*;bin/Telerik*;bin/System.*;bin/Microsoft.*;bin/Newtonsoft.Json.*" />
 	  <NGScripts Include="dist/**/*.*" />
       <DataProvider Include="Providers/DataProviders/SqlDataProvider/*.SqlDataProvider" />
       <Resources Include="@(ResourceFiles);@(Views);@(Images);@(TextFiles);@(SourceFiles);@(JsFiles);@(Manifest);@(DataProvider);@(Styles);@(NGScripts)" />
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" Exclude="$(MSBuildProjectDirectory)\bin\$(Configuration)\DotNetNuke*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Telerik*;$(MSBuildProjectDirectory)\bin\$(Configuration)\System.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Microsoft.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Newtonsoft.Json.*" />
-    <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.pdb" Exclude="$(MSBuildProjectDirectory)\bin\$(Configuration)\DotNetNuke*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Telerik*;$(MSBuildProjectDirectory)\bin\$(Configuration)\System.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Microsoft.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Newtonsoft.Json.*" />
+	  <SymbolsInclude Include="$(DNNFileName)_Symbols.dnn" />
+    <SymbolsInclude Include="License.txt" />
+    <SymbolsInclude Include="ReleaseNotes.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <BinInstallInclude Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.dll" Exclude="$(MSBuildProjectDirectory)\bin\$(Configuration)\DotNetNuke*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Telerik*;$(MSBuildProjectDirectory)\bin\$(Configuration)\System.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Microsoft.*;$(MSBuildProjectDirectory)\bin\$(Configuration)\Newtonsoft.Json.*" />
-  </ItemGroup>
-  <Target Name="CopyBin">
+ <Target Name="CopyBin">
+    <ItemGroup>
+      <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\*.dll" Exclude="$(MSBuildProjectDirectory)\bin\DotNetNuke*;$(MSBuildProjectDirectory)\bin\Telerik*;$(MSBuildProjectDirectory)\bin\System.*;$(MSBuildProjectDirectory)\bin\Microsoft.*;$(MSBuildProjectDirectory)\bin\Newtonsoft.Json.*" />
+      <BinSourceInclude Include="$(MSBuildProjectDirectory)\bin\*.pdb" Exclude="$(MSBuildProjectDirectory)\bin\DotNetNuke*;$(MSBuildProjectDirectory)\bin\Telerik*;$(MSBuildProjectDirectory)\bin\System.*;$(MSBuildProjectDirectory)\bin\Microsoft.*;$(MSBuildProjectDirectory)\bin\Newtonsoft.Json.*" />
+    </ItemGroup>
     <Copy SourceFiles="@(BinSourceInclude)" DestinationFolder="$(WebsitePath)\bin" />
   </Target>
   <Target Name="DebugProject" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -46,6 +51,7 @@
     <Copy SourceFiles="@(TextFiles)" DestinationFolder="$(FullModulePath)" />
     <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(FullModulePath)" />
     <Copy SourceFiles="@(DataProvider)" DestinationFolder="$(FullModulePath)\Providers\DataProviders\SqlDataProvider" />
-	<Copy SourceFiles="@(NGScripts)" DestinationFolder="$(FullModulePath)\dist\%(RecursiveDir)" />
+	  <Copy SourceFiles="@(NGScripts)" DestinationFolder="$(FullModulePath)\dist\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(FullModulePath)\App_LocalResources" />
   </Target>
 </Project>

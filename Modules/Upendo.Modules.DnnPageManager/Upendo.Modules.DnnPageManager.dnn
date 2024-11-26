@@ -1,0 +1,98 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="Upendo.Modules.DnnPageManager" type="Module" version="01.01.02">
+      <friendlyName>Upendo DNN PageManager</friendlyName>
+      <description>
+				This is a page management module meant to help make managing pages in DNN easier for all end-users, built by Upendo Ventures.
+			</description>
+      <iconFile>~/DesktopModules/Upendo.Modules.DnnPageManager/Images/PageManager.png</iconFile>
+      <owner>
+        <name>Will Strohl</name>
+        <organization>Upendo Ventures, LLC</organization>
+        <url>https://upendoventures.com/What/CMS/DNN</url>
+        <email>solutions@upendoventures.com</email>
+      </owner>
+      <license src="License.txt" />
+      <releaseNotes src="ReleaseNotes.txt" />
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">09.04.04</dependency>
+      </dependencies>
+      <components>
+        <component type="Module">
+          <desktopModule>
+            <moduleName>Upendo Page Manager</moduleName>
+            <foldername>Upendo.Modules.DnnPageManager</foldername>
+            <businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
+            <supportedFeatures>
+              <supportedFeature type="Portable" />
+            </supportedFeatures>
+            <shareable>Supported</shareable>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Upendo DNN Page Manager</friendlyName>
+                <definitionName>Upendo.Modules.DnnPageManager</definitionName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/Upendo.Modules.DnnPageManager/index.html</controlSrc>
+                    <supportsPartialRendering>True</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>Anonymous</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <supportsPopUps>True</supportsPopUps>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>QuickSettings</controlKey>
+                    <controlSrc>DesktopModules/Upendo.Modules.DnnPageManager/Settings.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>DnnSpaModule Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>Upendo.Modules.DnnPageManager.Controller.BusinessController, Upendo.Modules.DnnPageManager</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>01.01.02</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>Upendo.Modules.DnnPageManager.dll</name>
+              <version>01.01.02</version>
+              <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>AutoMapper.dll</name>
+              <version>10.1.1.0</version>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+        <component type="Cleanup" version="01.01.00" fileName="01.01.00.txt" />
+        <component type="Cleanup" version="01.01.01" fileName="01.01.01.txt" />
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/Upendo.Modules.DnnPageManager</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

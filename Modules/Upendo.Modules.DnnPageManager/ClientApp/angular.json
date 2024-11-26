@@ -104,5 +104,8 @@
       }
     }
   },
-  "defaultProject": "scripts"
+  "defaultProject": "scripts",
+  "cli": {
+    "analytics": false
+  }
 }

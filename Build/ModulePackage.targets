@@ -22,7 +22,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="MSBuild.Community.Tasks.Targets" />
-<Import Project="$(BuildScriptsPath)\Helpers.Targets" />
+  <Import Project="$(BuildScriptsPath)\Helpers.Targets" />
   <Target Name="SetVersion" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <XmlRead Prefix="n"
              Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
@@ -73,7 +73,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       XPathAttributeSelector = "/dotnetnuke/packages/package/dependencies/dependency[@type='managedPackage'][text()='$(PackageName)']/@version"
       NewValue="$(sVersion)" />
 
-  </Target>  <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </Target>
+  <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <XmlRead Prefix="n"
                     Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
                     XPath="dotnetnuke/packages/package[1]/@version"
@@ -82,34 +83,34 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     </XmlRead>
 
     <ItemGroup>
-      <InstallInclude Include="**\*.ascx" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.asmx" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.css" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.html" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.htm" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.resx" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.aspx" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.js" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.js.map" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.txt"  Exclude="**\obj\**;**\_ReSharper*\**;packages\**;node_modules\**;clientApp\**;readme.txt" />
-      <InstallInclude Include="**\images\**\*.*" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.eot" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.svg" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.ttf" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.woff" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.woff2" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.swf" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.ico" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.json" Exclude="packages\**;node_modules\**;clientApp\**;obj\**" />
-      <InstallInclude Include="**\*.scss" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.cshtml" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.png" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.gif" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.jpeg" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.jpg" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.bmp" Exclude="packages\**;node_modules\**;clientApp\**" />
-      <InstallInclude Include="**\*.xml" Exclude="packages\**;node_modules\**;clientApp\**;bin\**" />
-      <InstallInclude Include="**\web.config" Exclude="packages\**;node_modules\**;clientApp\**" />
+      <InstallInclude Include="**\*.ascx" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.asmx" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.css" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.html" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.htm" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.resx" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.aspx" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.js" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.js.map" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.txt"  Exclude="**\obj\**;**\_ReSharper*\**;packages\**;node_modules\**;clientApp\**;client-app\**;readme.txt" />
+      <InstallInclude Include="**\images\**\*.*" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.eot" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.svg" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.ttf" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.woff" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.woff2" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.swf" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.ico" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.json" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**;obj\**;.angular\**" />
+      <InstallInclude Include="**\*.scss" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.cshtml" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.png" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.gif" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.jpeg" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.jpg" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.bmp" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
+      <InstallInclude Include="**\*.xml" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**;bin\**" />
+      <InstallInclude Include="**\web.config" Exclude="packages\**;node_modules\**;clientApp\**;client-app\**" />
     </ItemGroup>
 
     <CreateItem Include="$(DNNFileName).dnn">
@@ -127,7 +128,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <CreateItem Include="**\$(Version).txt">
       <Output TaskParameter="Include" ItemName="PackageTxtFiles" />
     </CreateItem>
-
+    
     <CreateItem Include="**\*.sqldataprovider">
       <Output TaskParameter="Include" ItemName="SqlDataProviderFiles" />
     </CreateItem>
@@ -137,6 +138,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     </ItemGroup>
 
     <ItemGroup>
+      <SymbolsBinInclude Include="$(MSBuildProjectDirectory)\bin\*.dll" Exclude="$(MSBuildProjectDirectory)\bin\DotNetNuke*;$(MSBuildProjectDirectory)\bin\Dnn*;$(MSBuildProjectDirectory)\bin\Telerik*;$(MSBuildProjectDirectory)\bin\System.*;$(MSBuildProjectDirectory)\bin\Microsoft.*;$(MSBuildProjectDirectory)\bin\Newtonsoft.Json.*" />
       <SymbolsBinInclude Include="$(MSBuildProjectDirectory)\bin\*.pdb" Exclude="$(MSBuildProjectDirectory)\bin\DotNetNuke*;$(MSBuildProjectDirectory)\bin\Dnn*;$(MSBuildProjectDirectory)\bin\Telerik*;$(MSBuildProjectDirectory)\bin\System.*;$(MSBuildProjectDirectory)\bin\Microsoft.*;$(MSBuildProjectDirectory)\bin\Newtonsoft.Json.*" />
       <SymbolsBinInclude Include="$(MSBuildProjectDirectory)\bin\*.xml" Exclude="$(MSBuildProjectDirectory)\bin\DotNetNuke*;$(MSBuildProjectDirectory)\bin\Dnn*;$(MSBuildProjectDirectory)\bin\Telerik*;$(MSBuildProjectDirectory)\bin\System.*;$(MSBuildProjectDirectory)\bin\Microsoft.*;$(MSBuildProjectDirectory)\bin\Newtonsoft.Json.*" />
     </ItemGroup>
@@ -171,7 +173,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     <!-- Symbols Package -->
     <Copy SourceFiles="@(SymbolsInclude)" DestinationFolder="$(MSBuildProjectDirectory)\Package"/>
-    <Copy SourceFiles="@(SymbolsBinInclude)" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\bin"/>
+    <Copy SourceFiles="@(SymbolsBinInclude)" DestinationFolder="$(MSBuildProjectDirectory)\Package\bin"/>
 
     <CreateItem Include="$(MSBuildProjectDirectory)\ResourcesZip\**\*.*">
       <Output TaskParameter="Include" ItemName="ResourcesContent" />
@@ -193,7 +195,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <RemoveDir Directories="$(MSBuildProjectDirectory)\ResourcesZip" />
 
     <Delete Files="$(MSBuildProjectDirectory)\Resources.Zip" />
-    <!-- <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install.$(Extension)" /> -->
-    <!-- <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Symbols.$(Extension)" /> -->
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Symbols.$(Extension)" />
   </Target>
 </Project>
