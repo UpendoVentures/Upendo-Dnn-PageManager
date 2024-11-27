@@ -12,25 +12,24 @@
 </div>
 
 <div *ngIf="filterMetadata" class="alert alert-warning alert-panel">There are {{total$ | async}} pages missing critical SEO details.</div>
-<div *ngIf="filterUnpublished" class="alert alert-warning alert-panel">This is the list of unpublished pages {{total$ | async}}.</div>
+<div *ngIf="filterUnpublished" class="alert alert-warning alert-panel">You have {{total$ | async}} unpublished pages.</div>
 
-<div class="overflow-x-auto">
+<div class="filter-container overflow-x-auto">
   <div class="filterButton" *ngIf="(isWithoutSEO$ | async)">
-    <label>Filter By Missing Metadata </label>
+    <label>Missing Metadata </label>
     <label class="switch">
       <input type="checkbox" (click)="filterByMetadata()" [(ngModel)]="filterMetadata">
       <span class="slider round"></span>
     </label>
   </div>
- 
-  <div class="overflow-x-auto">
-    <div class="filterButton" *ngIf="(isUnpublished$ | async)">
-      <label>Filter By Unpublished Pages</label>
-      <label class="switch">
-        <input type="checkbox" (click)="filterByUnpublished()" [(ngModel)]="filterUnpublished">
-        <span class="slider round"></span>
-      </label>
+  <div class="filterButton" *ngIf="(isUnpublished$ | async)">
+    <label>Unpublished</label>
+    <label class="switch">
+      <input type="checkbox" (click)="filterByUnpublished()" [(ngModel)]="filterUnpublished">
+      <span class="slider round"></span>
+    </label>
   </div>
+</div>
 
   <div class="mat-elevation-z1">
     <table mat-table *ngIf="!(isLoading$ | async)" mat-table [dataSource]="dataSource$" matSort
