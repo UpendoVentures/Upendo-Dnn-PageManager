@@ -34,7 +34,7 @@
 	<Target Name="Compile" DependsOnTargets="Clean;">
 		<Message Importance="High" Text="======================================= Starting Target Compile ==========================================" />
 		<ItemGroup>
-			<ProjectFiles Include="$(MSBuildProjectDirectory)\Upendo.Modules.DnnPageManager.sln" />
+			<ProjectFiles Include="$(MSBuildProjectDirectory)\Modules\Upendo.Modules.DnnPageManager.sln" />
 		</ItemGroup>
 
 		<MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(BuildConfiguration);Platform=$(BuildPlatform);RootFolder=$(MSBuildProjectDirectory)" />

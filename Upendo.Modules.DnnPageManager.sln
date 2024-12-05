@@ -1,9 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Upendo.Modules.DnnPageManager", "Upendo.Modules.DnnPageManager\Upendo.Modules.DnnPageManager.csproj", "{7DCC1A29-DDEC-4B58-9F16-2FE5E0F49F66}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Files", "Build Files", "{F84D698C-3163-472D-95E9-EC36712D597B}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Helpers.targets = Build\Helpers.targets
+		Build\ModulePackage.targets = Build\ModulePackage.targets
+		Build\SolutionReferences.targets = Build\SolutionReferences.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{3EBFFE8A-E898-4FAE-A291-06F1474C30BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Upendo.Modules.DnnPageManager", "Modules\Upendo.Modules.DnnPageManager\Upendo.Modules.DnnPageManager.csproj", "{7DCC1A29-DDEC-4B58-9F16-2FE5E0F49F66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +27,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7DCC1A29-DDEC-4B58-9F16-2FE5E0F49F66} = {3EBFFE8A-E898-4FAE-A291-06F1474C30BB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE636B62-B6E3-4777-8DFB-CE6EE87FA7FA}
 	EndGlobalSection
 EndGlobal
