@@ -1,0 +1,91 @@
+mat-row,
+mat-header-row,
+mat-footer-row {
+  width: 100%;
+  display: table-row !important;
+}
+
+mat-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+  vertical-align: middle;
+  cursor: pointer;
+  cursor: default;
+}
+
+@media screen and (max-width: 1000px) {
+  .mat-table {
+    border: 0;
+    vertical-align: middle;
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+  /* Disable this to show header */
+  .mat-table .mat-header-cell {
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    height: 30px;
+    margin-left: 10px;
+    margin-right: 40px;
+  }
+
+  .mat-table .mat-cell:before {
+    content: attr(data-label);
+    float: left;
+    font-size: 10px;
+    font-weight: 700;
+    color: #46292b;
+    text-transform: uppercase;
+  }
+
+  .mat-table .mat-cell:first-of-type,
+  .mat-header-cell:first-of-type,
+  .mat-footer-cell:first-of-type {
+    padding-left: 10px !important;
+  }
+
+  th.mat-header-cell:first-of-type,
+  td.mat-cell:first-of-type,
+  td.mat-footer-cell:first-of-type {
+    padding-left: 0px !important;
+  }
+
+  th.mat-header-cell:last-of-type,
+  td.mat-cell:last-of-type,
+  td.mat-footer-cell:last-of-type {
+    padding-right: 8px !important;
+  }
+
+  .mat-row,
+  .mat-footer-row {
+    min-height: 0px !important;
+  }
+
+  .mat-header-row {
+    min-height: 0px !important;
+  }
+
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+
+  .mat-table .mat-cell:first-child {
+    margin-top: 4%;
+  }
+}

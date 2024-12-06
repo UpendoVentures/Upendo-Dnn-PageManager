@@ -1,1 +1,0 @@
-ng build --output-hashing none --configuration production

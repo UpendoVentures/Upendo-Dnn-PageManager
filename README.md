@@ -1,3 +1,36 @@
+# Upendo Page Manager Module for DNN  
+
+This module allows you to delegate the page management responsibilities to people that are not an Administrator.  Ordinarily, you'd have to promote the person to having full admin rights to the entire website, just to get some help managing pages and **applying SEO updates**.  This module fixes that mess!  
+
+## How to Use 💪🏽  
+All you need to do is [download the latest release](https://github.com/UpendoVentures/Upendo-Dnn-PageManager/releases/latest), and [don't forget to unblock the installation package](https://hotcakescommerce.zendesk.com/hc/en-us/articles/10932095222157-How-to-Unblock-File-Downloads).  
+
+Next, [install this module](https://www.youtube.com/watch?v=MgLaV0J_eLk&list=PLojRGd54eWTiK-0y8o5EBYVcCY2yzhTZk&index=4&pp=gAQBiAQB) like you would at any other time, then add it to a page.  
+
+From there, it should all be self-explanatory and follow the same workflows you normally might use when managing modules on your DNN website.  
+
+You simply assign view permissions to anyone you wish to see that page/module.  They'll be able to manage user accounts and roles on your behalf.  
+
+<hr />  
+
+## `Sponsors == (typeOf superHuman) Awesome;`  
+
+> Yes, it's not real code. It's just supposed to be fun. :P
+
+This solution is created and maintained by [Upendo Ventures](https://upendoventures.com/What/CMS/DNN) for the [DNN CMS Community](https://dnncommunity.org). Please consider [sponsoring us](https://github.com/sponsors/UpendoVentures) for this and [the many other open-source efforts we do](https://upendoventures.com/What/CMS/DNN/Extensions).  It's a lot.  :)  
+
+- [Sponsor Us](https://github.com/sponsors/UpendoVentures) (we're grateful at any level 🙏🏽)  
+
+<hr />  
+
+# Developers Only 🤓  
+
+If you're not a developer, the rest of this README is not going to interest you. 😉  
+
+This solution was built using the [Upendo DNN Generator](https://github.com/UpendoVentures/generator-upendodnn#readme).  
+
+<hr />
+
 **A Special Note to ALL Developers...**  
 Please do not begin any development until you first read through and understand all of the notes in the README below.  
 

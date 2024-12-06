@@ -22,8 +22,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <DnnVersion>09.06.01</DnnVersion>
-    <ReferencesPath>..\References</ReferencesPath>
+    <DnnVersion>09.11.00</DnnVersion>
+    <HccVersion>03.06.00</HccVersion>
+    <ReferencesPath>..\..\References</ReferencesPath>
     <DnnReferencePath>$(ReferencesPath)\DNN\$(DnnVersion)</DnnReferencePath>
+    <HccReferencePath>$(ReferencesPath)\HotcakesCommerce\$(HccVersion)</HccReferencePath>
   </PropertyGroup>
 </Project>
