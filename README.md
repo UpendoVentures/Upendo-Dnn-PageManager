@@ -21,6 +21,11 @@ This solution is created and maintained by [Upendo Ventures](https://upendoventu
 
 - [Sponsor Us](https://github.com/sponsors/UpendoVentures) (we're grateful at any level 🙏🏽)  
 
+## 🛠️ Need SLA-Based Support?  
+If you need more help than what we can provide here, we'd be happy to help you via [Upendo DNN Support](https://upendodnn.com).  
+
+>  😎 This is an **officially supported** extension! 🙌🏽   [DNN Extensions with Support](https://upendodnn.com/Extensions)  
+
 <hr />  
 
 # Developers Only 🤓  
