@@ -15,8 +15,7 @@
 		<p>THANK YOU to the following rockstars!</p>
 		<ul>
 			<li>Adam Bernstein, <a href="https://practicewise.com/" target="_blank">PracticeWise</a></li>
-			<li>Jeremy Farrance, <a href="https://accuraty.com/" target="_blank">Accuraty</a></li>
-			<li><a href="https://github.com/JohnRamminger" target="_blank">John Ramminger</a></li>
+			<li><a href="https://github.com/puresystems" target="_blank">PureSystems</a></li>
 			<li>(<i>two private sponsors</i>)</li>
 		</ul>
 	
@@ -24,13 +23,31 @@
 		<p>THANK YOU to the following community members for participating in this release!</p>
 		<ul>
 			<li>Will Strohl, <a href="https://upendoventures.com/How/People/Will-Strohl" target="_blank">Upendo Ventures</a></li>
-			<li>Ariel Blanco, <a href="https://upendoventures.com/What/CMS/DNN/Extensions" target="_blank">Upendo Ventures</a></li>
 		</ul>
 	
 		<h3><strong>Release Note Prefixes</strong></h3>
 		<p>The following prefixes are defined as:</p>
 		<ul>
 			<li><strong>SI:</strong> Support Inquiry - This issue was reported by a <a href="https://upendoventures.com/Support" target="_blank">support customer</a> and, as such, was prioritized above all other tasks.</li>
+		</ul>
+		<hr />
+
+		<h3>Version 01.03.00</h3>
+		<h4>Enhancements</h4>
+		<ul>
+			<li>Raised Minimum DNN Support to 10.2 (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/128" target="_blank">Issue 128</a>, thanks <a href="https://github.com/WillStrohl" target="_blank">@WillStrohl</a>!)</li>
+			<!--
+			<li> (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/" target="_blank">Issue </a>, thanks <a href="https://github.com/" target="_blank">@</a>!)</li>
+			<li>None at this time</li>
+			-->
+		</ul>
+		<h4>Maintenence &amp Bug Fixes</h4>
+		<ul>
+			<li>None at this time</li>
+			<!--
+			<li>None at this time</li>
+			<li> (<a href="https://github.com/UpendoVentures/Upendo-Dnn-PageManager/issues/" target="_blank">Issue </a>, thanks <a href="https://github.com/" target="_blank">@</a>!)</li>
+			-->
 		</ul>
 		<hr />
 
